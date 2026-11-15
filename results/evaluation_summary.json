@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-15T18:05:14.438029+00:00",
+  "timestamp": "2026-11-15T18:18:49.311300+00:00",
   "ai_mode": "local_only",
   "model": "local_tfidf",
   "total_questions": 20,
@@ -15,10 +15,10 @@
   "false_answer_rate_pct": 0.0,
   "latency_metrics": {
     "mean_ms": 1.58,
-    "median_ms": 1.94,
-    "p95_ms": 3.16,
-    "min_ms": 0.23,
-    "max_ms": 3.84
+    "median_ms": 1.75,
+    "p95_ms": 3.14,
+    "min_ms": 0.22,
+    "max_ms": 4.03
   },
   "category_breakdown": {
     "Programs": {

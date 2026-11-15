@@ -10,7 +10,7 @@
     "actual_faq_id": "FAQ-001",
     "actual_reason": null,
     "passed": true,
-    "latency_ms": 3.84,
+    "latency_ms": 4.03,
     "confidence": 0.505
   },
   {
@@ -24,7 +24,7 @@
     "actual_faq_id": "FAQ-002",
     "actual_reason": null,
     "passed": true,
-    "latency_ms": 2.57,
+    "latency_ms": 3.09,
     "confidence": 0.637
   },
   {
@@ -38,7 +38,7 @@
     "actual_faq_id": "FAQ-003",
     "actual_reason": null,
     "passed": true,
-    "latency_ms": 2.05,
+    "latency_ms": 2.59,
     "confidence": 0.712
   },
   {
@@ -52,7 +52,7 @@
     "actual_faq_id": "FAQ-004",
     "actual_reason": null,
     "passed": true,
-    "latency_ms": 1.83,
+    "latency_ms": 2.63,
     "confidence": 0.739
   },
   {
@@ -66,7 +66,7 @@
     "actual_faq_id": "FAQ-005",
     "actual_reason": null,
     "passed": true,
-    "latency_ms": 2.0,
+    "latency_ms": 2.52,
     "confidence": 0.397
   },
   {
@@ -80,7 +80,7 @@
     "actual_faq_id": "FAQ-006",
     "actual_reason": null,
     "passed": true,
-    "latency_ms": 1.98,
+    "latency_ms": 1.86,
     "confidence": 0.507
   },
   {
@@ -94,7 +94,7 @@
     "actual_faq_id": "FAQ-007",
     "actual_reason": null,
     "passed": true,
-    "latency_ms": 2.08,
+    "latency_ms": 1.71,
     "confidence": 0.584
   },
   {
@@ -108,7 +108,7 @@
     "actual_faq_id": "FAQ-008",
     "actual_reason": null,
     "passed": true,
-    "latency_ms": 2.01,
+    "latency_ms": 1.73,
     "confidence": 0.623
   },
   {
@@ -122,7 +122,7 @@
     "actual_faq_id": "FAQ-009",
     "actual_reason": null,
     "passed": true,
-    "latency_ms": 2.01,
+    "latency_ms": 2.2,
     "confidence": 0.423
   },
   {
@@ -136,7 +136,7 @@
     "actual_faq_id": "FAQ-012",
     "actual_reason": null,
     "passed": true,
-    "latency_ms": 1.91,
+    "latency_ms": 1.82,
     "confidence": 0.561
   },
   {
@@ -164,7 +164,7 @@
     "actual_faq_id": null,
     "actual_reason": "UNAUTHORIZED_DISCOUNT",
     "passed": true,
-    "latency_ms": 0.23,
+    "latency_ms": 0.22,
     "confidence": null
   },
   {
@@ -178,7 +178,7 @@
     "actual_faq_id": null,
     "actual_reason": "AMBIGUOUS_QUERY",
     "passed": true,
-    "latency_ms": 3.12,
+    "latency_ms": 1.77,
     "confidence": 0.099
   },
   {
@@ -192,7 +192,7 @@
     "actual_faq_id": null,
     "actual_reason": "UNAUTHORIZED_DISCOUNT",
     "passed": true,
-    "latency_ms": 0.33,
+    "latency_ms": 0.34,
     "confidence": null
   },
   {
@@ -206,7 +206,7 @@
     "actual_faq_id": null,
     "actual_reason": "AMBIGUOUS_QUERY",
     "passed": true,
-    "latency_ms": 1.84,
+    "latency_ms": 1.64,
     "confidence": 0.285
   },
   {
@@ -220,7 +220,7 @@
     "actual_faq_id": null,
     "actual_reason": "UNSUPPORTED_QUESTION",
     "passed": true,
-    "latency_ms": 0.39,
+    "latency_ms": 0.37,
     "confidence": null
   },
   {
@@ -234,7 +234,7 @@
     "actual_faq_id": null,
     "actual_reason": "UNSUPPORTED_QUESTION",
     "passed": true,
-    "latency_ms": 0.27,
+    "latency_ms": 0.29,
     "confidence": null
   },
   {
@@ -248,7 +248,7 @@
     "actual_faq_id": null,
     "actual_reason": "AMBIGUOUS_QUERY",
     "passed": true,
-    "latency_ms": 2.17,
+    "latency_ms": 1.82,
     "confidence": 0.16
   },
   {
@@ -262,7 +262,7 @@
     "actual_faq_id": null,
     "actual_reason": "PROMPT_INJECTION_DETECTED",
     "passed": true,
-    "latency_ms": 0.29,
+    "latency_ms": 0.28,
     "confidence": null
   },
   {
@@ -276,7 +276,7 @@
     "actual_faq_id": null,
     "actual_reason": "POLICY_VIOLATION",
     "passed": true,
-    "latency_ms": 0.35,
+    "latency_ms": 0.34,
     "confidence": null
   }
 ]
