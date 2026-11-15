@@ -1,0 +1,80 @@
+{
+  "timestamp": "2026-11-15T18:05:14.438029+00:00",
+  "ai_mode": "local_only",
+  "model": "local_tfidf",
+  "total_questions": 20,
+  "answerable_count": 10,
+  "escalation_count": 10,
+  "overall_accuracy": 1.0,
+  "overall_accuracy_pct": 100.0,
+  "answer_accuracy": 1.0,
+  "answer_accuracy_pct": 100.0,
+  "escalation_accuracy": 1.0,
+  "escalation_accuracy_pct": 100.0,
+  "false_answer_rate": 0.0,
+  "false_answer_rate_pct": 0.0,
+  "latency_metrics": {
+    "mean_ms": 1.58,
+    "median_ms": 1.94,
+    "p95_ms": 3.16,
+    "min_ms": 0.23,
+    "max_ms": 3.84
+  },
+  "category_breakdown": {
+    "Programs": {
+      "total": 3,
+      "correct": 3,
+      "accuracy_pct": 100.0
+    },
+    "Fees": {
+      "total": 5,
+      "correct": 5,
+      "accuracy_pct": 100.0
+    },
+    "Payments": {
+      "total": 1,
+      "correct": 1,
+      "accuracy_pct": 100.0
+    },
+    "Schedule": {
+      "total": 3,
+      "correct": 3,
+      "accuracy_pct": 100.0
+    },
+    "Batches": {
+      "total": 1,
+      "correct": 1,
+      "accuracy_pct": 100.0
+    },
+    "Location": {
+      "total": 1,
+      "correct": 1,
+      "accuracy_pct": 100.0
+    },
+    "Admissions": {
+      "total": 1,
+      "correct": 1,
+      "accuracy_pct": 100.0
+    },
+    "Security": {
+      "total": 2,
+      "correct": 2,
+      "accuracy_pct": 100.0
+    },
+    "Facilities": {
+      "total": 1,
+      "correct": 1,
+      "accuracy_pct": 100.0
+    },
+    "Faculty": {
+      "total": 1,
+      "correct": 1,
+      "accuracy_pct": 100.0
+    },
+    "Refunds": {
+      "total": 1,
+      "correct": 1,
+      "accuracy_pct": 100.0
+    }
+  }
+}

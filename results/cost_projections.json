@@ -1,0 +1,40 @@
+[
+  {
+    "tier": "Tier 1: Pure Local Retrieval (TF-IDF)",
+    "api_calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "api_cost_usd": 0.0,
+    "compute_cost_usd": 0.002,
+    "total_cost_usd": 0.002,
+    "cost_per_query_usd": 2e-06,
+    "mean_latency_ms": 1.6,
+    "external_api_dependency": "None (100% air-gapped / offline capable)"
+  },
+  {
+    "tier": "Tier 2: Selective Hybrid Routing (Recommended)",
+    "routing_pct": "20% queries routed to Gemini for disambiguation",
+    "api_calls": 206,
+    "input_tokens": 78280,
+    "output_tokens": 9270,
+    "api_cost_usd": 0.008652,
+    "compute_cost_usd": 0.004,
+    "total_cost_usd": 0.01265,
+    "cost_per_query_usd": 1.27e-05,
+    "mean_latency_ms": 18.5,
+    "external_api_dependency": "Selective (Resilient local fallback on API failure)"
+  },
+  {
+    "tier": "Tier 3: Full Gemini Classification",
+    "routing_pct": "100% queries classified via Gemini",
+    "api_calls": 1030,
+    "input_tokens": 391400,
+    "output_tokens": 46350,
+    "api_cost_usd": 0.04326,
+    "compute_cost_usd": 0.008,
+    "total_cost_usd": 0.05126,
+    "cost_per_query_usd": 5.13e-05,
+    "mean_latency_ms": 320.0,
+    "external_api_dependency": "Full (High network coupling; requires bounded retries)"
+  }
+]

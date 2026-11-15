@@ -1,0 +1,236 @@
+{
+  "version": "1.0.0",
+  "institute": "Northstar Learning Academy",
+  "campus": "Andheri West, Mumbai, Maharashtra, India (Demonstration Campus)",
+  "total_entries": 15,
+  "last_updated": "2026-11-15",
+  "faqs": [
+    {
+      "id": "FAQ-001",
+      "category": "Programs",
+      "canonical_question": "What programs does Northstar Learning Academy offer?",
+      "approved_answer": "Northstar Learning Academy offers a Foundation Program for students in Classes 9 and 10 and a JEE Preparation Program for students in Classes 11 and 12.",
+      "alternative_questions": [
+        "What courses do you provide?",
+        "Which classes or programs are available at Northstar?",
+        "Do you teach Class 9, 10, 11, or 12 students?",
+        "What are the academic offerings for school and entrance exams?",
+        "Can you tell me about the coaching programs offered?"
+      ],
+      "keywords": ["programs", "courses", "foundation", "JEE", "Class 9", "Class 10", "Class 11", "Class 12", "offerings"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-002",
+      "category": "Fees",
+      "canonical_question": "What is the Foundation Program tuition fee?",
+      "approved_answer": "The Foundation Program tuition fee is ₹24,000 for the full 10-month program. Study material and scheduled mock tests are included.",
+      "alternative_questions": [
+        "How much does the Foundation Program cost?",
+        "Foundation course fee details",
+        "What are the charges for 9th and 10th class foundation coaching?",
+        "Tuition fees for 10-month foundation course",
+        "Foundation ki fees kitni hai?"
+      ],
+      "keywords": ["foundation fee", "tuition fee", "₹24,000", "24000", "10-month", "study material", "mock tests"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-003",
+      "category": "Fees",
+      "canonical_question": "What is the JEE Preparation Program tuition fee?",
+      "approved_answer": "The JEE Preparation Program tuition fee is ₹60,000 for the full 12-month program. Study material and scheduled mock tests are included.",
+      "alternative_questions": [
+        "How much is the fee for JEE coaching?",
+        "What are the tuition charges for the JEE Preparation Program?",
+        "Cost of 11th and 12th JEE preparation course",
+        "JEE tuition fee structure and duration",
+        "JEE ki fees kitni hai?"
+      ],
+      "keywords": ["JEE fee", "tuition fee", "₹60,000", "60000", "12-month", "study material", "mock tests"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-004",
+      "category": "Fees",
+      "canonical_question": "Is there a registration charge?",
+      "approved_answer": "A separate registration fee of ₹1,000 applies to both programs. The registration fee is non-refundable and is not included in the tuition fee.",
+      "alternative_questions": [
+        "Do I need to pay a registration fee?",
+        "Is there an enrolment or registration charge?",
+        "How much is the admission registration charge?",
+        "Is registration fee refundable or part of tuition?",
+        "What are the one-time registration costs?"
+      ],
+      "keywords": ["registration fee", "registration charge", "₹1,000", "1000", "non-refundable", "both programs"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-005",
+      "category": "Payments",
+      "canonical_question": "Can tuition fees be paid in instalments?",
+      "approved_answer": "Tuition fees for either program may be paid in two equal instalments. The first is due at enrolment and the second is due 30 calendar days later. The registration fee is paid separately at enrolment.",
+      "alternative_questions": [
+        "Do you allow instalment payments for tuition?",
+        "Can I pay the fees in parts or EMI?",
+        "What is the instalment schedule for paying fees?",
+        "How are tuition payments split over time?",
+        "When is the second instalment due?"
+      ],
+      "keywords": ["instalments", "installments", "two equal instalments", "payment schedule", "30 calendar days", "enrolment"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-006",
+      "category": "Schedule",
+      "canonical_question": "What are the Foundation Program weekday timings?",
+      "approved_answer": "Foundation weekday classes are held on Monday, Wednesday and Friday from 5:00 PM to 7:00 PM IST.",
+      "alternative_questions": [
+        "What time are Foundation weekday classes?",
+        "When are Foundation classes scheduled during the week?",
+        "Foundation Program batch timings on weekdays",
+        "Days and hours for Class 9 and 10 weekday batches",
+        "Are Foundation classes held on Mon, Wed, Fri?"
+      ],
+      "keywords": ["foundation timings", "weekday schedule", "Monday Wednesday Friday", "5:00 PM to 7:00 PM", "IST"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-007",
+      "category": "Schedule",
+      "canonical_question": "What are the JEE Preparation Program timings?",
+      "approved_answer": "JEE Preparation Program classes are held on Tuesday, Thursday and Saturday from 5:00 PM to 8:00 PM IST.",
+      "alternative_questions": [
+        "What is the schedule for JEE classes?",
+        "When are the JEE batch timings?",
+        "What days and times do JEE students attend class?",
+        "What are the days and hours for JEE classes?",
+        "When are JEE classes scheduled during the week?",
+        "JEE Preparation timetable during the week",
+        "Is JEE coaching on Tuesday, Thursday and Saturday?"
+      ],
+      "keywords": ["JEE timings", "JEE schedule", "Tuesday Thursday Saturday", "5:00 PM to 8:00 PM", "IST"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-008",
+      "category": "Schedule",
+      "canonical_question": "Are weekend batches available?",
+      "approved_answer": "A Foundation Program weekend batch is available on Saturday and Sunday from 9:00 AM to 11:00 AM IST. A separate weekend-only JEE batch is not currently offered.",
+      "alternative_questions": [
+        "Do you have weekend classes?",
+        "Are there Saturday and Sunday batches for JEE or Foundation?",
+        "Is there a weekend batch for JEE?",
+        "Weekend batch timings for school students",
+        "Can I attend only on weekends?"
+      ],
+      "keywords": ["weekend batches", "Saturday and Sunday", "9:00 AM to 11:00 AM", "Foundation weekend", "no weekend JEE"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-009",
+      "category": "Batches",
+      "canonical_question": "How many students are there in a batch?",
+      "approved_answer": "Each teaching batch has a maximum capacity of 30 students.",
+      "alternative_questions": [
+        "What is the batch size at Northstar?",
+        "How many students per class batch?",
+        "What is the student-to-teacher batch capacity limit?",
+        "Are classrooms crowded or what is the maximum batch strength?",
+        "Batch capacity and student limit"
+      ],
+      "keywords": ["batch size", "class capacity", "30 students", "maximum capacity", "student strength"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-010",
+      "category": "Scholarships",
+      "canonical_question": "Does the institute offer scholarships?",
+      "approved_answer": "Eligible students may receive a scholarship of up to 20% of the tuition fee based on the institute's scholarship assessment. Scholarships are not automatically guaranteed.",
+      "alternative_questions": [
+        "Are there any scholarship discounts available?",
+        "Can I get a fee reduction or financial scholarship?",
+        "What scholarship percentage do you provide?",
+        "Is scholarship guaranteed for top students?",
+        "Do you have merit scholarships?"
+      ],
+      "keywords": ["scholarships", "scholarship discount", "up to 20%", "tuition fee", "scholarship assessment", "not guaranteed"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-011",
+      "category": "Scholarships",
+      "canonical_question": "How can a student apply for a scholarship?",
+      "approved_answer": "Students must request the scholarship assessment before enrolment. Eligibility and the final scholarship amount are confirmed individually in writing by the admissions team.",
+      "alternative_questions": [
+        "What is the process to apply for a scholarship?",
+        "How do I register for the scholarship assessment test?",
+        "When should I request a scholarship review?",
+        "Scholarship application procedure and requirements",
+        "Who confirms the scholarship eligibility?"
+      ],
+      "keywords": ["apply for scholarship", "scholarship assessment", "before enrolment", "confirmed in writing", "admissions team"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-012",
+      "category": "Location",
+      "canonical_question": "Where is Northstar Learning Academy located?",
+      "approved_answer": "Northstar Learning Academy operates from its fictional demonstration campus in Andheri West, Mumbai, Maharashtra, India. This is a sample project location, not a real address.",
+      "alternative_questions": [
+        "What is your campus address?",
+        "Where is your institute located?",
+        "Where can I find your coaching centre?",
+        "Which city and area is Northstar in?",
+        "Location of Northstar Learning Academy"
+      ],
+      "keywords": ["location", "address", "campus", "Andheri West", "Mumbai", "Maharashtra", "India"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-013",
+      "category": "Programs",
+      "canonical_question": "Are online classes available?",
+      "approved_answer": "Both programs are currently offered as in-person classroom courses only. Regular online classes are not available.",
+      "alternative_questions": [
+        "Do you provide online or remote coaching?",
+        "Can I attend classes online from home?",
+        "Is there a distance learning or Zoom batch option?",
+        "Are recorded lectures or live online classes supported?",
+        "Is online mode available for JEE or Foundation?"
+      ],
+      "keywords": ["online classes", "remote learning", "in-person classroom", "no online classes", "offline only"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-014",
+      "category": "Admissions",
+      "canonical_question": "How can a student apply for admission?",
+      "approved_answer": "Students can contact the admissions team at admissions@northstar.example to request an application form and confirm seat availability. Admission is subject to seat availability and completion of the enrolment process.",
+      "alternative_questions": [
+        "What is the admission procedure?",
+        "How do I enrol in Northstar Learning Academy?",
+        "How can we get an admission form?",
+        "What is the contact email for admissions?",
+        "How to join the Foundation or JEE coaching batch?"
+      ],
+      "keywords": ["apply for admission", "admissions team", "admissions@northstar.example", "application form", "seat availability", "enrolment"],
+      "immutable": true
+    },
+    {
+      "id": "FAQ-015",
+      "category": "Refunds",
+      "canonical_question": "What is the tuition refund policy?",
+      "approved_answer": "A tuition refund may be requested within seven calendar days of enrolment only if classes have not started. Once classes have begun, tuition fees are non-refundable. The separate registration fee is non-refundable.",
+      "alternative_questions": [
+        "Can I get a refund if I cancel my enrolment?",
+        "What is your cancellation and fee refund policy?",
+        "Are fees refundable after attending classes?",
+        "How many days do I have to request a tuition refund?",
+        "Is the registration fee refundable if I withdraw?"
+      ],
+      "keywords": ["refund policy", "tuition refund", "seven calendar days", "classes have not started", "non-refundable"],
+      "immutable": true
+    }
+  ]
+}
