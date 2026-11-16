@@ -58,3 +58,4 @@ jobs:
       - name: Typecheck and build frontend
         working-directory: frontend
         run: npm run build
+

@@ -97,3 +97,4 @@ The request lifecycle moves through seven discrete stages:
 2. **Controlled Abstention:** Ambiguous queries (e.g., "What is the fee?") MUST be escalated to prevent misinforming parents.
 3. **Zero Secrets in Telemetry:** All log payloads are scrubbed of emails, phone numbers, and credentials before serialization.
 4. **Air-Gapped Local Operation:** The service boots and answers valid queries locally even if no Gemini API key is configured.
+

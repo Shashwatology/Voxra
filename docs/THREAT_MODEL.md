@@ -30,3 +30,4 @@
    * *Mitigation:* Even if an adversarial prompt passes regex screening, the retrieval service will find low similarity against the 15 FAQs and trigger `LOW_CONFIDENCE` or `AMBIGUOUS_QUERY` escalation.
 2. **Reverse Proxy IP Trust:** When running behind a corporate reverse proxy (e.g. Cloudflare or AWS ALB), IP rate limiting relies on `request.client.host`.
    * *Mitigation:* In production deployments, configure `Forwarded` or `X-Forwarded-For` verification with trusted proxy CIDRs.
+

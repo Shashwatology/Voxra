@@ -58,3 +58,4 @@ def test_hinglish_normalization():
     """Verify Hindi/Hinglish query retrieves correct FAQ."""
     res = retrieval_service.retrieve("Foundation ki fees kitni hai?")
     assert res.top_candidate.faq_id == "FAQ-002"
+

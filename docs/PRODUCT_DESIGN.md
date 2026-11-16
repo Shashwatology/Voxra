@@ -70,3 +70,4 @@ For coaching institute staff, the workspace provides six purpose-driven modules:
 4. **Evaluations:** Full 20-question benchmark runner results showing 100% accuracy, latency metrics, and raw JSON export.
 5. **Security & Trust:** Trust boundary pipeline, threat matrix, and provider configuration status.
 6. **Documentation:** System architecture guide and operational cost projections.
+

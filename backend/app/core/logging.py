@@ -72,3 +72,4 @@ def setup_logger(name: str = "voxra") -> logging.Logger:
     return logger
 
 logger = setup_logger()
+

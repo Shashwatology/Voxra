@@ -80,3 +80,4 @@ faq_item = faq_service.get_faq(chosen_faq_id)
 return faq_item.approved_answer
 ```
 This guarantees that **100% of facts, currency amounts, deadlines, and percentages originate directly from approved institutional records**.
+

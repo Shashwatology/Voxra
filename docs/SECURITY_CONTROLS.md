@@ -55,3 +55,4 @@ The trust boundary is enforced strictly in backend application code:
 
 ### 2.5 Administrative Route Protection
 * Endpoints accessing staff handoffs (`GET /handoffs`, `POST /handoffs/{id}/resolve`) require an administrative API key (`X-Admin-Key`) in production environments.
+

@@ -58,3 +58,4 @@ def test_get_nonexistent_faq():
     """Verify requesting an invalid FAQ ID returns None."""
     assert faq_service.get_faq("FAQ-999") is None
     assert faq_service.get_canonical_answer("FAQ-999") is None
+

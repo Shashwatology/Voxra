@@ -87,3 +87,4 @@ def test_handoffs_queue():
     assert isinstance(data, list)
     # At least one escalated query from the previous test should be present
     assert any(h["escalation_reason"] == "PROMPT_INJECTION_DETECTED" for h in data)
+

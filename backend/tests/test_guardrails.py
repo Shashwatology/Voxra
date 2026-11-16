@@ -78,3 +78,4 @@ def test_legitimate_enquiry_passes_guardrails():
     assert is_safe
     assert reason is None
     assert msg is None
+

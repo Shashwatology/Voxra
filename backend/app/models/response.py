@@ -73,3 +73,4 @@ class HandoffRecord(BaseModel):
     status: str
     candidate_faq_ids: List[str] = []
     reviewer_notes: Optional[str] = None
+

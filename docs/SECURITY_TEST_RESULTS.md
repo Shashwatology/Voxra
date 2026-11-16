@@ -40,3 +40,4 @@ Unit test `backend/tests/test_guardrails.py` and `backend/tests/test_api.py` con
 * Phone numbers are scrubbed with `[REDACTED_PHONE]`.
 * Sensitive dictionaries containing `api_key` are replaced with `[REDACTED_SECRET]`.
 * Stack traces and internal Python exception messages are blocked from HTTP error bodies.
+

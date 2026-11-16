@@ -113,3 +113,4 @@ export const FaqDetailDrawer: React.FC<FaqDetailDrawerProps> = ({ faq, onClose }
     </div>
   );
 };
+

@@ -75,3 +75,4 @@ class FaqService:
         return item.approved_answer if item else None
 
 faq_service = FaqService()
+

@@ -144,3 +144,4 @@ async def resolve_handoff(
     if not record:
         raise HTTPException(status_code=404, detail="Handoff record not found.")
     return record
+

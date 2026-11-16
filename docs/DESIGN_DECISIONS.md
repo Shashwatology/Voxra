@@ -24,3 +24,4 @@
 * **Context:** Voice input can inadvertently capture private background conversation or misinterpret accents.
 * **Decision:** Implement browser-native Web Speech API with an explicit click-to-record modal and editable transcript confirmation dialog.
 * **Consequence:** User explicitly approves every transcript before submission, ensuring untrusted audio inputs pass through the exact same guardrail pipeline as typed text.
+

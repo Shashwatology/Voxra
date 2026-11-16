@@ -29,3 +29,4 @@ If you discover a security vulnerability, prompt injection bypass, or unauthoriz
 * **Secret Scrubbing:** All JSON logs are stripped of API credentials and user PII.
 * **Rate Limits:** In-memory sliding-window limiter blocks traffic exceeding 60 requests/minute per client IP.
 * **Controlled Abstention:** Any unverified query triggers explicit escalation.
+

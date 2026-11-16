@@ -118,3 +118,4 @@ def calculate_costs(total_queries: int = 1000):
 
 if __name__ == "__main__":
     calculate_costs(1000)
+

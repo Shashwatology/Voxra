@@ -27,3 +27,4 @@ During iterative development and adversarial testing, several boundary condition
 1. **Context Window Persistence:** The current API evaluates each turn statelessly. An enquiry like *"And what are its timings?"* following a Foundation fee enquiry cannot link back to the previous turn without explicit frontend session propagation.
 2. **Compound Multi-Part Questions:** A composite query (*"What are Foundation fees and do you provide school bus transport?"*) triggers guardrails for the transport portion and escalates the entire query rather than providing a partial answer.
 3. **Voice Accent Variance:** Browser-based speech recognition relies on client device acoustics and OS language packs. In noisy environments or heavy accents, transcription accuracy may degrade, mitigated by our editable preview dialog.
+

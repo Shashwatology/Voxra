@@ -192,3 +192,4 @@ class GeminiService:
         return decision_obj
 
 gemini_service = GeminiService()
+
