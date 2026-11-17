@@ -4,14 +4,19 @@
 
 @layer base {
   body {
-    @apply antialiased text-slate-800 bg-[#F8F9FA] dark:text-slate-100 dark:bg-[#0D1117];
+    @apply antialiased text-stone-900 bg-[#FDFBF7];
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   /* Accessible focus indicators */
   :focus-visible {
-    @apply outline-none ring-2 ring-teal-600 ring-offset-2 ring-offset-white dark:ring-teal-400 dark:ring-offset-slate-900;
+    @apply outline-none ring-2 ring-amber-600 ring-offset-2 ring-offset-[#FDFBF7];
   }
+}
+
+/* Warm subtle ambient background pattern */
+.bg-warm-radial {
+  background: radial-gradient(circle at 50% 38%, rgba(251, 191, 36, 0.12) 0%, rgba(254, 243, 199, 0.05) 50%, transparent 75%);
 }
 
 /* Restrained scrollbar */
@@ -25,10 +30,9 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 dark:bg-slate-700 rounded-full;
+  @apply bg-stone-300 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-400 dark:bg-slate-600;
+  @apply bg-stone-400;
 }
-

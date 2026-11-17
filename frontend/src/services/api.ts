@@ -8,52 +8,120 @@ import {
   MetricsSummaryResponse
 } from '../types/api';
 
-const API_BASE = ''; // Uses Vite proxy in development or relative path in production
+// Resolves API base URL:
+// - Uses VITE_API_URL if configured in environment variables
+// - Otherwise falls back to relative path '' which is proxied by Vite in dev or routed by vercel.json in prod
+const API_BASE = (((import.meta as any).env?.VITE_API_URL as string) || '').replace(/\/+$/, '');
+
+export class ApiError extends Error {
+  isNetworkError: boolean;
+  isValidationError: boolean;
+  isServerError: boolean;
+  statusCode?: number;
+  details?: any;
+
+  constructor(
+    message: string,
+    options: {
+      isNetworkError?: boolean;
+      isValidationError?: boolean;
+      isServerError?: boolean;
+      statusCode?: number;
+      details?: any;
+    } = {}
+  ) {
+    super(message);
+    this.name = 'ApiError';
+    this.isNetworkError = options.isNetworkError || false;
+    this.isValidationError = options.isValidationError || false;
+    this.isServerError = options.isServerError || false;
+    this.statusCode = options.statusCode;
+    this.details = options.details;
+  }
+}
+
+async function safeFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  const url = `${API_BASE}${endpoint}`;
+  let res: Response;
+  try {
+    res = await fetch(url, options);
+  } catch (err: any) {
+    throw new ApiError(
+      "We couldn't connect to the admissions service. Please verify your internet connection or try again.",
+      { isNetworkError: true }
+    );
+  }
+
+  // Check if server returned HTML error page instead of JSON API response
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    if (!res.ok) {
+      throw new ApiError(
+        `Admissions API endpoint unavailable (${res.status} ${res.statusText}).`,
+        { isServerError: true, statusCode: res.status }
+      );
+    }
+  }
+
+  if (!res.ok) {
+    let errBody: any = null;
+    try {
+      errBody = await res.json();
+    } catch {
+      errBody = { message: res.statusText };
+    }
+
+    if (res.status === 422) {
+      throw new ApiError(
+        errBody.message || "Invalid question input. Please ask a clearer question between 3 and 500 characters.",
+        { isValidationError: true, statusCode: 422, details: errBody.details }
+      );
+    }
+
+    if (res.status === 429) {
+      throw new ApiError(
+        "Rate limit exceeded. Please wait a moment before asking another question.",
+        { isServerError: false, statusCode: 429 }
+      );
+    }
+
+    throw new ApiError(
+      errBody.message || `Service request failed with HTTP ${res.status}.`,
+      { isServerError: res.status >= 500, statusCode: res.status, details: errBody }
+    );
+  }
+
+  return res.json();
+}
 
 export const apiClient = {
   async askQuestion(question: string, session_id?: string): Promise<AskResponse> {
     const payload: AskRequest = { question, session_id };
-    const res = await fetch(`${API_BASE}/ask`, {
+    return safeFetch<AskResponse>('/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ message: res.statusText }));
-      throw new Error(err.message || `API request failed with status ${res.status}`);
-    }
-    return res.json();
   },
 
   async getHealth(): Promise<HealthResponse> {
-    const res = await fetch(`${API_BASE}/health`);
-    if (!res.ok) throw new Error('Failed to fetch system health status');
-    return res.json();
+    return safeFetch<HealthResponse>('/health');
   },
 
   async getFaqs(): Promise<FaqItem[]> {
-    const res = await fetch(`${API_BASE}/faq`);
-    if (!res.ok) throw new Error('Failed to fetch canonical FAQs');
-    return res.json();
+    return safeFetch<FaqItem[]>('/faq');
   },
 
   async getMetrics(): Promise<MetricsSummaryResponse> {
-    const res = await fetch(`${API_BASE}/metrics/summary`);
-    if (!res.ok) throw new Error('Failed to fetch operational telemetry');
-    return res.json();
+    return safeFetch<MetricsSummaryResponse>('/metrics/summary');
   },
 
   async getEvaluationResults(): Promise<EvaluationResponse> {
-    const res = await fetch(`${API_BASE}/evaluation/results`);
-    if (!res.ok) throw new Error('Failed to fetch evaluation benchmark data');
-    return res.json();
+    return safeFetch<EvaluationResponse>('/evaluation/results');
   },
 
   async getHandoffs(): Promise<HandoffRecord[]> {
-    const res = await fetch(`${API_BASE}/handoffs`);
-    if (!res.ok) throw new Error('Failed to fetch human handoff queue');
-    return res.json();
+    return safeFetch<HandoffRecord[]>('/handoffs');
   },
 
   async resolveHandoff(
@@ -61,13 +129,10 @@ export const apiClient = {
     status: 'REVIEWED' | 'RESOLVED' | 'DISMISSED',
     notes?: string
   ): Promise<HandoffRecord> {
-    const res = await fetch(`${API_BASE}/handoffs/${requestId}/resolve`, {
+    return safeFetch<HandoffRecord>(`/handoffs/${requestId}/resolve`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ resolution_status: status, reviewer_notes: notes })
     });
-    if (!res.ok) throw new Error('Failed to update handoff record');
-    return res.json();
   }
 };
-
