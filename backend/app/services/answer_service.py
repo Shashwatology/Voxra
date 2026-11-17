@@ -85,12 +85,20 @@ class AnswerService:
                 confidence=round(retrieval.top_candidate.score, 3) if retrieval.top_candidate else None
             )
 
-        # Step 4: Decision Routing (Local vs. Gemini Hybrid)
+        # Step 4: Decision Routing (Selective Hybrid Architecture)
         chosen_faq_id: Optional[str] = None
         confidence_score: Optional[float] = None
 
-        if gemini_service.is_configured and settings.AI_MODE == "hybrid":
-            # Pass candidates to Gemini for fine-grained intent selection & disambiguation
+        # Fast Path: If deterministic TF-IDF candidate meets high-confidence threshold
+        if retrieval.top_candidate and retrieval.top_candidate.score >= settings.HIGH_CONFIDENCE_THRESHOLD:
+            chosen_faq_id = retrieval.top_candidate.faq_id
+            confidence_score = retrieval.top_candidate.score
+            logger.info(
+                f"Fast-path high confidence match: {chosen_faq_id} (score={confidence_score:.3f})",
+                extra={"request_id": request_id, "faq_id": chosen_faq_id}
+            )
+        elif gemini_service.is_configured and settings.AI_MODE == "hybrid":
+            # Intermediate Confidence Path: Pass candidates to Gemini for fine-grained intent selection & disambiguation
             gemini_decision = await gemini_service.classify_and_select(query, retrieval.candidates)
             if gemini_decision and gemini_decision.decision == "ANSWER" and gemini_decision.faq_id:
                 chosen_faq_id = gemini_decision.faq_id

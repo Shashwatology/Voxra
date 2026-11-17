@@ -7,6 +7,13 @@ import os
 from pathlib import Path
 from typing import Literal
 
+# Load environment variables from .env if present
+try:
+    import dotenv
+    dotenv.load_dotenv(Path(__file__).resolve().parent.parent.parent.parent / ".env")
+except Exception:
+    pass
+
 # Base directory paths
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 DATA_DIR = BASE_DIR / "data"
@@ -20,7 +27,7 @@ class Settings:
     
     # Model & AI Configuration
     GEMINI_API_KEY: str | None = os.getenv("GEMINI_API_KEY", None)
-    GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    GEMINI_MODEL: str = os.getenv("GEMINI_MODEL", "gemini-3.1-flash-lite")
     AI_MODE: Literal["hybrid", "local_only"] = (
         "hybrid" if os.getenv("AI_MODE", "hybrid") == "hybrid" and os.getenv("GEMINI_API_KEY")
         else "local_only"

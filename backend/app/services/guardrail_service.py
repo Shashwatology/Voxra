@@ -45,6 +45,10 @@ UNSUPPORTED_FACILITY_PATTERNS = [
     re.compile(r"\b(allergy|epinephrine|medical\s+emergency)\b", re.IGNORECASE),
 ]
 
+UNSUPPORTED_LOCATION_PATTERNS = [
+    re.compile(r"\b(delhi|bangalore|bengaluru|pune|hyderabad|chennai|kolkata|ahmedabad|kota|jaipur|gurgaon|noida)\b", re.IGNORECASE),
+]
+
 REFUND_BOUNDARY_PATTERNS = [
     re.compile(r"(refund\s+after\s+(attending|starting|beginning)\s+classes)", re.IGNORECASE),
     re.compile(r"(completed\s+\d+\s+weeks?.*refund|classes\s+have\s+started.*refund)", re.IGNORECASE),
@@ -109,6 +113,16 @@ class GuardrailService:
                     False,
                     EscalationReason.UNSUPPORTED_QUESTION,
                     "Northstar Learning Academy does not provide hostel, transport, or private home tutoring. Our admissions team can assist with nearby student accommodation recommendations."
+                )
+
+        # 6. Out-of-Scope Locations (Delhi, Bangalore, Pune, etc.)
+        for pattern in UNSUPPORTED_LOCATION_PATTERNS:
+            if pattern.search(cleaned):
+                logger.info("Guardrail tripped: Unsupported campus location.")
+                return (
+                    False,
+                    EscalationReason.UNSUPPORTED_QUESTION,
+                    "Northstar Learning Academy operates exclusively at our single campus in Andheri West, Mumbai. We do not have branches in other cities."
                 )
 
         # 6. Refund Policy Violation Demands
