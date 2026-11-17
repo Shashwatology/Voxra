@@ -4,11 +4,20 @@ Uses scikit-learn TF-IDF with word and character n-grams, cosine similarity,
 and rigorous ambiguity and threshold boundaries over the 15 approved FAQs.
 """
 
+import math
 import re
+from collections import Counter
 from typing import Dict, List, NamedTuple, Optional, Tuple
-import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+
+try:
+    import numpy as np
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.metrics.pairwise import cosine_similarity
+    SKLEARN_AVAILABLE = True
+except ImportError:
+    SKLEARN_AVAILABLE = False
+    np = None
+
 from backend.app.core.config import settings
 from backend.app.core.logging import logger
 from backend.app.services.faq_service import faq_service
@@ -58,6 +67,22 @@ class RetrievalService:
         cleaned = re.sub(r"[^\w\s₹?]", " ", cleaned)
         return " ".join(cleaned.split())
 
+    def _tokenize(self, text: str) -> List[str]:
+        words = text.lower().split()
+        unigrams = words
+        bigrams = [f"{words[i]} {words[i+1]}" for i in range(len(words) - 1)]
+        return unigrams + bigrams
+
+    def _compute_vector(self, tokens: List[str]) -> Dict[str, float]:
+        counts = Counter(tokens)
+        vec = {}
+        for tok, count in counts.items():
+            if hasattr(self, '_pure_idf') and tok in self._pure_idf:
+                tf = 1.0 + math.log(count) if count > 0 else 0.0
+                vec[tok] = tf * self._pure_idf[tok]
+        norm = math.sqrt(sum(v * v for v in vec.values())) or 1.0
+        return {k: v / norm for k, v in vec.items()}
+
     def _build_index(self) -> None:
         """Constructs the TF-IDF matrix across all 15 canonical FAQs."""
         corpus: List[str] = []
@@ -80,14 +105,26 @@ class RetrievalService:
             self.faq_categories.append(faq.category)
             self.canonical_questions.append(faq.canonical_question)
 
-        # Word n-grams (1, 2) and character n-grams (3, 5) combined via analyzer
-        self.vectorizer = TfidfVectorizer(
-            ngram_range=(1, 2),
-            sublinear_tf=True,
-            norm="l2",
-            lowercase=True
-        )
-        self.tfidf_matrix = self.vectorizer.fit_transform(corpus)
+        if SKLEARN_AVAILABLE:
+            self.vectorizer = TfidfVectorizer(
+                ngram_range=(1, 2),
+                sublinear_tf=True,
+                norm="l2",
+                lowercase=True
+            )
+            self.tfidf_matrix = self.vectorizer.fit_transform(corpus)
+        else:
+            # Pure Python TF-IDF fallback for lightweight serverless environments
+            doc_tokens_list = [self._tokenize(doc) for doc in corpus]
+            self._pure_vocab = sorted(list({tok for toks in doc_tokens_list for tok in toks}))
+            n_docs = len(corpus)
+            self._pure_df = Counter()
+            for toks in doc_tokens_list:
+                for tok in set(toks):
+                    self._pure_df[tok] += 1
+            self._pure_idf = {tok: math.log((1 + n_docs) / (1 + self._pure_df[tok])) + 1 for tok in self._pure_vocab}
+            self._pure_doc_vectors = [self._compute_vector(toks) for toks in doc_tokens_list]
+
         logger.info(
             f"TF-IDF retrieval index built successfully for {len(self.faq_ids)} FAQs.",
             extra={"corpus_size": len(corpus)}
@@ -99,10 +136,16 @@ class RetrievalService:
         Applies domain-affinity adjustments for program and fee distinctions.
         """
         normalized_query = self._normalize_text(query)
-        query_vector = self.vectorizer.transform([normalized_query])
-        
-        # Calculate cosine similarities
-        raw_scores = cosine_similarity(query_vector, self.tfidf_matrix)[0].copy()
+
+        if SKLEARN_AVAILABLE:
+            query_vector = self.vectorizer.transform([normalized_query])
+            raw_scores = cosine_similarity(query_vector, self.tfidf_matrix)[0].tolist()
+        else:
+            q_vec = self._compute_vector(self._tokenize(normalized_query))
+            raw_scores = []
+            for d_vec in self._pure_doc_vectors:
+                sim = sum(q_vec.get(tok, 0.0) * d_vec.get(tok, 0.0) for tok in q_vec)
+                raw_scores.append(sim)
         
         # Domain-affinity fine-tuning for near-neighbors
         query_words = set(normalized_query.split())
@@ -111,7 +154,7 @@ class RetrievalService:
         has_reg = "registration" in query_words or "register" in query_words
         has_weekend = "weekend" in query_words or "saturday" in query_words or "sunday" in query_words
 
-        adjusted_scores = raw_scores.copy()
+        adjusted_scores = list(raw_scores)
         for idx, faq_id in enumerate(self.faq_ids):
             doc_text = self.canonical_questions[idx].lower()
             
@@ -136,7 +179,7 @@ class RetrievalService:
                     adjusted_scores[idx] *= 1.35
         
         # Rank all candidates by adjusted score
-        ranked_indices = np.argsort(adjusted_scores)[::-1]
+        ranked_indices = sorted(range(len(adjusted_scores)), key=lambda i: adjusted_scores[i], reverse=True)
         
         candidates: List[CandidateMatch] = []
         for idx in ranked_indices[:top_k]:

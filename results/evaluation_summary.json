@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-17T05:19:42.361139+00:00",
+  "timestamp": "2026-11-17T06:00:58.592641+00:00",
   "ai_mode": "hybrid",
   "model": "gemini-3.1-flash-lite",
   "total_questions": 20,
@@ -14,11 +14,11 @@
   "false_answer_rate": 0.0,
   "false_answer_rate_pct": 0.0,
   "latency_metrics": {
-    "mean_ms": 645.95,
-    "median_ms": 1013.32,
-    "p95_ms": 1257.24,
-    "min_ms": 0.15,
-    "max_ms": 2081.89
+    "mean_ms": 660.22,
+    "median_ms": 817.09,
+    "p95_ms": 1555.09,
+    "min_ms": 0.18,
+    "max_ms": 1832.97
   },
   "category_breakdown": {
     "Programs": {
