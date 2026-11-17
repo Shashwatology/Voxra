@@ -11,7 +11,7 @@
     { "source": "/evaluation/results", "destination": "/api/index.py" },
     { "source": "/handoffs/(.*)", "destination": "/api/index.py" },
     { "source": "/handoffs", "destination": "/api/index.py" },
-    { "source": "/docs", "destination": "/api/index.py" },
+    { "source": "/api/docs", "destination": "/api/index.py" },
     { "source": "/openapi.json", "destination": "/api/index.py" },
     { "source": "/api/(.*)", "destination": "/api/index.py" },
     { "source": "/((?!assets/|favicon.svg|.*\\..*).*)", "destination": "/index.html" }

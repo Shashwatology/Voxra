@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   ShieldCheck,
   ArrowRight,
   CheckCircle2,
   AlertCircle,
-  Clock,
-  BookOpen,
   Send,
   Loader2,
-  FileText,
-  ExternalLink,
   ChevronRight,
-  Lock,
-  Layers,
   Cpu,
   UserCheck,
-  Mic
+  Mic,
+  Database,
+  Sparkles
 } from 'lucide-react';
 import { apiClient } from '../services/api';
 import { AskResponse } from '../types/api';
+import { Hero3D } from '../components/Hero3D';
 
 interface LandingPageProps {
   onNavigateDemo?: () => void;
@@ -35,6 +33,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   const [demoLoading, setDemoLoading] = useState(false);
   const [demoResponse, setDemoResponse] = useState<AskResponse | null>(null);
   const [demoError, setDemoError] = useState<string | null>(null);
+  const [selectedDemoTab, setSelectedDemoTab] = useState<'grounded' | 'escalated'>('grounded');
+  const [heroMode, setHeroMode] = useState<'portrait' | 'core3d'>('portrait');
 
   const samplePrompts = [
     { label: 'Foundation Fee', query: 'What is the fee for the Foundation Program?' },
@@ -62,43 +62,86 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-stone-900 selection:bg-amber-100 selection:text-amber-900">
+    <div className="min-h-screen bg-[#F8F7F4] text-[#171C24] selection:bg-[#C1A37A]/20 selection:text-[#171C24]">
       {/* ─────────────────────────────────────────────────────────────────────────────
-          SECTION A — HERO SECTION
+          SECTION A — EDITORIAL 3D HERO
       ───────────────────────────────────────────────────────────────────────────── */}
-      <section className="relative pt-12 sm:pt-20 pb-16 sm:pb-28 overflow-hidden bg-warm-radial">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-          {/* Subtle Pill Tag */}
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/60 text-amber-800 text-xs font-medium mb-6 animate-fade-in">
-            <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
-            <span>Guarded AI Intelligence · Zero Hallucinated Fees</span>
-          </div>
+      <section className="relative pt-12 sm:pt-20 pb-16 sm:pb-24 overflow-hidden">
+        {/* Ambient Subtle Radial Glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-b from-[#C1A37A]/12 via-[#DCE5DD]/20 to-transparent blur-3xl pointer-events-none rounded-full" />
 
-          {/* Centered Large Headline */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-stone-900 max-w-4xl mx-auto leading-[1.08] mb-6 font-sans">
-            Better answers. Less waiting. More confidence.
-          </h1>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+          {/* Subtle Pill Tag */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/80 border border-stone-200/90 text-stone-700 text-xs font-medium mb-6 shadow-2xs backdrop-blur-xs"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-[#C1A37A]" />
+            <span>Trusted AI Enquiry Intelligence · Northstar Learning Academy</span>
+          </motion.div>
+
+          {/* Centered Large Editorial Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#171C24] max-w-4xl mx-auto leading-[1.08] mb-6 font-sans"
+          >
+            Better answers. Less waiting.{' '}
+            <span className="text-[#C1A37A]">More confidence.</span>
+          </motion.h1>
 
           {/* Supporting Copy */}
-          <p className="text-base sm:text-xl text-stone-600 max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-10 font-normal">
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-base sm:text-xl text-stone-600 max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-10 font-normal"
+          >
             Help parents find the information they need, with responses grounded in approved
             institute policies and a clear route to human assistance.
-          </p>
+          </motion.p>
 
-          {/* Hero Quick Inquiry Bar — Directly Inspired by Reference Composition */}
-          <div className="max-w-xl mx-auto mb-10 sm:mb-14">
+          {/* Dual CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-12"
+          >
+            <button
+              onClick={() => onNavigateDemo ? onNavigateDemo() : (window.location.href = '/demo')}
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-[#171C24] hover:bg-stone-800 text-white font-medium text-sm sm:text-base px-7 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
+            >
+              <span>Launch Demo</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+            <a
+              href="#how-it-works"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white hover:bg-stone-50 text-stone-800 border border-stone-300 font-medium text-sm sm:text-base px-6 py-3.5 rounded-full shadow-2xs hover:border-stone-400 transition-all"
+            >
+              <span>Explore Architecture</span>
+            </a>
+          </motion.div>
+
+          {/* Hero Quick Inquiry Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="max-w-xl mx-auto mb-10 sm:mb-14"
+          >
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 if (heroQuery.trim()) {
-                  if (onNavigateDemo) {
-                    onNavigateDemo();
-                  } else {
-                    window.location.href = '/demo';
-                  }
+                  if (onNavigateDemo) onNavigateDemo();
+                  else window.location.href = '/demo';
                 }
               }}
-              className="relative flex items-center bg-white border border-stone-300 rounded-full p-1.5 shadow-md focus-within:ring-2 focus-within:ring-amber-500/30 focus-within:border-stone-400 transition-all"
+              className="relative flex items-center bg-white border border-stone-300/90 rounded-full p-1.5 shadow-warm focus-within:ring-2 focus-within:ring-[#C1A37A]/30 focus-within:border-stone-400 transition-all"
             >
               <input
                 type="text"
@@ -113,14 +156,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   if (onNavigateDemo) onNavigateDemo();
                   else window.location.href = '/demo';
                 }}
-                className="inline-flex items-center space-x-1.5 bg-[#F6A54C] hover:bg-[#E8953C] text-stone-950 font-medium text-xs sm:text-sm px-5 py-2.5 rounded-full transition-all shadow-sm shrink-0 cursor-pointer"
+                className="inline-flex items-center space-x-1.5 bg-[#C1A37A] hover:bg-[#B39366] text-[#171C24] font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-full transition-all shadow-xs shrink-0 cursor-pointer"
               >
-                <span>Try live demo</span>
+                <span>Ask Voxra</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>
 
-            {/* Quick Prompt Suggestions */}
+            {/* Quick Prompt Tags */}
             <div className="flex flex-wrap items-center justify-center gap-1.5 mt-3 text-xs text-stone-500">
               <span className="text-[11px] font-medium text-stone-400">Popular:</span>
               <button
@@ -128,7 +171,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   setHeroQuery("What is the JEE Preparation Program tuition fee?");
                   handleRunDemo("What is the JEE Preparation Program tuition fee?");
                 }}
-                className="text-[11px] bg-white/90 hover:bg-white border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-amber-400"
+                className="text-[11px] bg-white hover:bg-stone-50 border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-[#C1A37A]"
               >
                 JEE Fee: ₹60,000
               </button>
@@ -137,7 +180,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   setHeroQuery("What is the Foundation Program tuition fee?");
                   handleRunDemo("What is the Foundation Program tuition fee?");
                 }}
-                className="text-[11px] bg-white/90 hover:bg-white border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-amber-400"
+                className="text-[11px] bg-white hover:bg-stone-50 border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-[#C1A37A]"
               >
                 Foundation Fee: ₹24,000
               </button>
@@ -146,7 +189,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   setHeroQuery("When are JEE classes scheduled during the week?");
                   handleRunDemo("When are JEE classes scheduled during the week?");
                 }}
-                className="text-[11px] bg-white/90 hover:bg-white border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-amber-400"
+                className="text-[11px] bg-white hover:bg-stone-50 border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-[#C1A37A]"
               >
                 JEE Timings
               </button>
@@ -155,367 +198,245 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   setHeroQuery("Does the institute offer scholarships?");
                   handleRunDemo("Does the institute offer scholarships?");
                 }}
-                className="text-[11px] bg-white/90 hover:bg-white border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-amber-400"
+                className="text-[11px] bg-white hover:bg-stone-50 border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-[#C1A37A]"
               >
                 20% Scholarship
               </button>
             </div>
-          </div>
+          </motion.div>
 
           {/* ─────────────────────────────────────────────────────────────────────────
-              HERO PHOTOGRAPHY & FLOATING CONVERSATION CARDS
+              HERO SHOWCASE: EDITORIAL HUMAN PORTRAIT & 3D VERIFICATION CORE
           ───────────────────────────────────────────────────────────────────────── */}
-          <div className="relative max-w-4xl mx-auto mt-4">
-            {/* Ambient Golden Glow Behind Image */}
-            <div className="absolute inset-0 bg-gradient-to-t from-amber-200/50 via-amber-100/20 to-transparent blur-3xl rounded-full transform -translate-y-8" />
-
-            {/* Central Photographic Subject with Soft Gradient Blend */}
-            <div className="relative z-10 mx-auto w-72 sm:w-96 md:w-[420px] aspect-[4/5] rounded-3xl overflow-hidden shadow-warm-lg bg-stone-100">
-              <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
-                alt="Parent reviewing admissions enquiry on smartphone"
-                className="w-full h-full object-cover object-center"
-                loading="eager"
-              />
-              {/* Soft Bottom Gradient Fade into Ivory Canvas */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#FDFBF7] via-transparent to-transparent opacity-90" />
-            </div>
-
-            {/* FLOATING CARD 1: Grounded Approved Answer (Left) */}
-            <div className="hidden sm:block absolute top-12 -left-6 md:-left-14 z-20 max-w-xs text-left bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-warm-lg border border-stone-200/90 transform -rotate-1 hover:rotate-0 transition-transform">
-              <div className="flex items-center space-x-2.5 mb-2">
-                <div className="w-6 h-6 rounded-full bg-amber-100 text-amber-900 flex items-center justify-center text-[10px] font-bold">
-                  P
-                </div>
-                <p className="text-xs font-semibold text-stone-800">
-                  What is the fee for the Foundation Program?
-                </p>
-              </div>
-              <div className="pl-8 border-l-2 border-emerald-500/60 ml-3 py-0.5 space-y-1">
-                <p className="text-xs text-stone-600 leading-snug">
-                  "The Foundation Program tuition fee is ₹24,000 for the full 10-month program."
-                </p>
-                <div className="flex items-center space-x-1.5 pt-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="text-[10px] font-semibold text-emerald-800 uppercase tracking-wider">
-                    Approved · FAQ-002
-                  </span>
-                </div>
+          <div className="relative max-w-4xl mx-auto mt-6 sm:mt-10">
+            {/* View Switcher Pill */}
+            <div className="flex items-center justify-center mb-6">
+              <div className="inline-flex items-center bg-white/90 border border-stone-200/90 rounded-full p-1 shadow-2xs backdrop-blur-xs text-xs font-medium">
+                <button
+                  type="button"
+                  onClick={() => setHeroMode('portrait')}
+                  className={`flex items-center space-x-1.5 px-4 py-1.5 rounded-full transition-all cursor-pointer ${
+                    heroMode === 'portrait'
+                      ? 'bg-[#171C24] text-white shadow-xs font-semibold'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                >
+                  <span>Parent Experience</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setHeroMode('core3d')}
+                  className={`flex items-center space-x-1.5 px-4 py-1.5 rounded-full transition-all cursor-pointer ${
+                    heroMode === 'core3d'
+                      ? 'bg-[#171C24] text-white shadow-xs font-semibold'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#C1A37A]" />
+                  <span>3D Verification Core</span>
+                </button>
               </div>
             </div>
 
-            {/* FLOATING CARD 2: Controlled Policy Escalation (Right Top) */}
-            <div className="hidden sm:block absolute top-4 -right-6 md:-right-14 z-20 max-w-xs text-left bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-warm-lg border border-stone-200/90 transform rotate-1 hover:rotate-0 transition-transform">
-              <div className="flex items-center space-x-2.5 mb-2">
-                <div className="w-6 h-6 rounded-full bg-stone-100 text-stone-700 flex items-center justify-center text-[10px] font-bold">
-                  P
-                </div>
-                <p className="text-xs font-semibold text-stone-800">
-                  Can you guarantee a top JEE rank?
-                </p>
-              </div>
-              <div className="pl-8 border-l-2 border-amber-500/60 ml-3 py-0.5 space-y-1">
-                <p className="text-xs text-stone-600 leading-snug">
-                  "Result guarantees are not covered by our approved policy. Our admissions counselors will assist you."
-                </p>
-                <div className="flex items-center space-x-1.5 pt-1">
-                  <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
-                  <span className="text-[10px] font-semibold text-amber-800 uppercase tracking-wider">
-                    Escalated · Safety Guardrail
-                  </span>
-                </div>
-              </div>
-            </div>
+            {heroMode === 'portrait' ? (
+              /* Editorial Human Photography Showcase (Inspired by reference) */
+              <div className="relative mx-auto flex items-center justify-center min-h-[380px] sm:min-h-[460px] pb-4">
+                {/* Subtle Ambient Radial Glow behind subject */}
+                <div className="absolute inset-0 bg-gradient-to-b from-[#C1A37A]/15 via-[#DCE5DD]/20 to-transparent blur-3xl rounded-full transform scale-90 pointer-events-none" />
 
-            {/* FLOATING CARD 3: Schedule Verification (Right Bottom) */}
-            <div className="hidden md:block absolute bottom-12 -right-10 z-20 max-w-xs text-left bg-white/95 backdrop-blur-sm p-3.5 rounded-2xl shadow-warm-lg border border-stone-200/90 transform -rotate-1 hover:rotate-0 transition-transform">
-              <div className="flex items-center space-x-2 mb-1.5">
-                <div className="w-5 h-5 rounded-full bg-stone-100 text-stone-700 flex items-center justify-center text-[10px] font-bold">
-                  P
+                {/* Central Human Subject with soft gradient fade into ivory background */}
+                <div className="relative z-10 w-full max-w-[340px] sm:max-w-[400px] mx-auto overflow-hidden">
+                  <img
+                    src="/hero-person.jpg"
+                    alt="Parent researching educational admissions with Voxra"
+                    className="w-full h-auto object-cover object-top rounded-3xl [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] shadow-warm"
+                    loading="eager"
+                  />
                 </div>
-                <p className="text-xs font-semibold text-stone-800">
-                  Can tuition be paid in instalments?
-                </p>
+
+                {/* Floating Chat Bubble 1 (Left - Grounded Answer) */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, delay: 0.2 }}
+                  className="hidden md:flex absolute top-12 -left-2 lg:-left-10 z-20 max-w-[280px] text-left items-start space-x-2.5 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-warm-lg border border-stone-200/90 transform -rotate-1 hover:rotate-0 transition-transform"
+                >
+                  <div className="w-7 h-7 rounded-full bg-[#171C24] text-[#C1A37A] flex items-center justify-center shrink-0 shadow-2xs font-mono font-bold text-xs">
+                    V
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-emerald-700 flex items-center space-x-1 mb-0.5">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-600 inline mr-1" />
+                      Approved · FAQ-002
+                    </p>
+                    <p className="text-xs text-stone-700 leading-snug">
+                      "The Foundation Program tuition fee is <span className="font-semibold text-stone-900">₹24,000</span> for the full 10-month program."
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Floating Chat Bubble 2 (Right Upper - Parent Question) */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, delay: 0.3 }}
+                  className="hidden md:flex absolute top-8 -right-2 lg:-right-10 z-20 max-w-[260px] text-left items-start space-x-2.5 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-warm-lg border border-stone-200/90 transform rotate-1 hover:rotate-0 transition-transform"
+                >
+                  <div className="w-7 h-7 rounded-full bg-amber-100 text-amber-900 flex items-center justify-center shrink-0 font-semibold text-xs">
+                    P
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase font-medium tracking-wider text-stone-400 mb-0.5">
+                      Parent Inquiry
+                    </p>
+                    <p className="text-xs font-medium text-stone-800 leading-snug">
+                      Can you guarantee a top JEE rank?
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Floating Chat Bubble 3 (Right Lower - Guarded Escalation) */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.4 }}
+                  className="hidden md:flex absolute bottom-8 -right-4 lg:-right-6 z-20 max-w-[290px] text-left items-start space-x-2.5 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-warm-lg border border-stone-200/90 transform -rotate-1 hover:rotate-0 transition-transform"
+                >
+                  <div className="w-7 h-7 rounded-full bg-[#171C24] text-amber-400 flex items-center justify-center shrink-0 shadow-2xs font-mono font-bold text-xs">
+                    V
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-amber-700 flex items-center space-x-1 mb-0.5">
+                      <AlertCircle className="w-3 h-3 text-amber-600 inline mr-1" />
+                      Escalated to Staff
+                    </p>
+                    <p className="text-xs text-stone-700 leading-snug">
+                      "Result guarantees are not covered by our approved policy. Our admissions counselors will assist you."
+                    </p>
+                  </div>
+                </motion.div>
               </div>
-              <div className="pl-7 border-l-2 border-emerald-500/60 ml-2.5 py-0.5 space-y-1">
-                <p className="text-xs text-stone-600 leading-snug">
-                  "Yes, tuition may be paid in two equal instalments 30 days apart."
-                </p>
-                <div className="flex items-center space-x-1">
-                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                  <span className="text-[10px] font-semibold text-emerald-800 uppercase tracking-wider">
-                    Verified · FAQ-005
-                  </span>
-                </div>
+            ) : (
+              /* Interactive 3D Dimensional Verification Element */
+              <div className="relative z-10 mx-auto">
+                <Hero3D />
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────────────────────
-          SECTION B — PRODUCT INTRODUCTION
+          SECTION B — PRODUCT PREVIEW & WORKSPACE SHOWCASE
       ───────────────────────────────────────────────────────────────────────────── */}
       <section id="product" className="py-20 border-t border-stone-200/70 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-bold text-amber-700 tracking-wider uppercase">
-              The Coaching Institute Problem
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <span className="text-xs font-bold text-[#C1A37A] tracking-wider uppercase font-mono">
+              Product Overview
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mt-2 mb-4">
-              Your institute's information, clearly delivered.
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#171C24] mt-2 mb-4 font-sans">
+              Your institute's verified information, perfectly delivered.
             </h2>
             <p className="text-stone-600 text-base sm:text-lg leading-relaxed">
-              Coaching institutes receive hundreds of repetitive parent inquiries regarding fees,
-              schedules, batch sizes, and scholarships. Manual handling is slow and repetitive, while
-              unrestrained generative AI creates financial and legal risks by hallucinating discounts or promising ranks.
+              Experience an intelligent admissions assistant that never invents fee discounts,
+              never hallucinates unapproved dates, and escalates complex requests to human staff with full context.
             </p>
           </div>
 
-          {/* Comparison Cards: Unsafe GenAI vs Voxra Guarded Intelligence */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* The Risk: Conventional Generative Chat */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-stone-50 border border-stone-200/90 text-left">
-              <div className="flex items-center space-x-2 text-rose-700 font-semibold text-sm mb-3">
-                <AlertCircle className="w-4 h-4" />
-                <span>The Conventional Chatbot Risk</span>
+          {/* Interactive Assistant Preview Card */}
+          <div className="max-w-4xl mx-auto rounded-3xl bg-[#F8F7F4] border border-stone-200/90 shadow-warm p-4 sm:p-6">
+            <div className="flex items-center justify-between pb-4 border-b border-stone-200/80 mb-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 rounded-full bg-rose-400/80" />
+                <div className="w-3 h-3 rounded-full bg-amber-400/80" />
+                <div className="w-3 h-3 rounded-full bg-emerald-400/80" />
+                <span className="ml-2 text-xs font-mono text-stone-500 font-medium">Northstar Admissions Assistant · Live Studio Preview</span>
               </div>
-              <h3 className="text-lg font-bold text-stone-900 mb-2">
-                Invented Fees & Unauthorized Promises
-              </h3>
-              <p className="text-sm text-stone-600 leading-relaxed mb-4">
-                Standard LLMs attempt to answer everything. When a parent negotiates or asks about scholarships,
-                the model often invents unauthorized 50% discounts, promises top 100 ranks, or provides outdated timetables.
-              </p>
-              <div className="space-y-2 text-xs text-stone-500 pt-2 border-t border-stone-200">
-                <div className="flex items-center space-x-2 text-rose-700">
-                  <span>✕</span>
-                  <span>Unverifiable generative text generation</span>
-                </div>
-                <div className="flex items-center space-x-2 text-rose-700">
-                  <span>✕</span>
-                  <span>Silent hallucination of fee concessions</span>
-                </div>
-                <div className="flex items-center space-x-2 text-rose-700">
-                  <span>✕</span>
-                  <span>Zero audit trail or human escalation policy</span>
-                </div>
-              </div>
-            </div>
-
-            {/* The Solution: Voxra Guarded Intelligence */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-amber-50/50 border border-amber-200 text-left relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-amber-200/30 rounded-bl-full pointer-events-none" />
-              <div className="flex items-center space-x-2 text-amber-800 font-semibold text-sm mb-3">
-                <ShieldCheck className="w-4 h-4 text-amber-600" />
-                <span>Voxra Architecture</span>
-              </div>
-              <h3 className="text-lg font-bold text-stone-900 mb-2">
-                Automate Verifiable. Escalate the Rest.
-              </h3>
-              <p className="text-sm text-stone-700 leading-relaxed mb-4">
-                Voxra uses AI strictly to index and identify approved FAQs. Customer-facing answers are returned
-                verbatim from the official knowledge base. Anything ambiguous or unapproved is cleanly escalated to human staff.
-              </p>
-              <div className="space-y-2 text-xs text-stone-600 pt-2 border-t border-amber-200">
-                <div className="flex items-center space-x-2 text-emerald-700">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>100% Verbatim approved FAQ strings</span>
-                </div>
-                <div className="flex items-center space-x-2 text-emerald-700">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Deterministic guardrails for discounts & guarantees</span>
-                </div>
-                <div className="flex items-center space-x-2 text-emerald-700">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Audited human handoff queue with machine reason codes</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────────────────────
-          SECTION C — HOW IT WORKS
-      ───────────────────────────────────────────────────────────────────────────── */}
-      <section id="how-it-works" className="py-20 border-t border-stone-200/70 bg-[#FDFBF7]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold text-amber-700 tracking-wider uppercase">
-              Predictable Engineering
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mt-2 mb-4">
-              How trusted enquiry intelligence works
-            </h2>
-            <p className="text-stone-600 text-base">
-              Every query passes through a multi-stage verification pipeline before any answer is returned.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Step 1 */}
-            <div className="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200/80 shadow-warm text-left">
-              <div className="w-10 h-10 rounded-xl bg-amber-100/70 text-amber-800 flex items-center justify-center font-bold text-sm mb-5">
-                01
-              </div>
-              <h3 className="text-lg font-bold text-stone-900 mb-2">
-                Parent Asks Inquiry
-              </h3>
-              <p className="text-sm text-stone-600 leading-relaxed">
-                Parents or students submit natural language queries via text or Web Speech voice input.
-                Input is validated and sanitized against prompt injections.
-              </p>
-            </div>
-
-            {/* Step 2 */}
-            <div className="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200/80 shadow-warm text-left">
-              <div className="w-10 h-10 rounded-xl bg-amber-100/70 text-amber-800 flex items-center justify-center font-bold text-sm mb-5">
-                02
-              </div>
-              <h3 className="text-lg font-bold text-stone-900 mb-2">
-                Guarded Verification
-              </h3>
-              <p className="text-sm text-stone-600 leading-relaxed">
-                Queries are matched against the 15 canonical FAQs using deterministic TF-IDF indexing and
-                Gemini candidate selection. Guardrails screen for unauthorized fee waivers.
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="bg-white p-6 sm:p-8 rounded-2xl border border-stone-200/80 shadow-warm text-left">
-              <div className="w-10 h-10 rounded-xl bg-amber-100/70 text-amber-800 flex items-center justify-center font-bold text-sm mb-5">
-                03
-              </div>
-              <h3 className="text-lg font-bold text-stone-900 mb-2">
-                Verbatim Answer or Handoff
-              </h3>
-              <p className="text-sm text-stone-600 leading-relaxed">
-                If grounded, the exact approved canonical text is returned with FAQ ID and latency metrics.
-                If ambiguous or unsupported, it escalates to admissions staff.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────────────────────────────────────────
-          SECTION D — LIVE INTERACTIVE CHATBOT DEMONSTRATION
-      ───────────────────────────────────────────────────────────────────────────── */}
-      <section className="py-20 border-t border-stone-200/70 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <div className="max-w-2xl mx-auto mb-10">
-            <span className="text-xs font-bold text-amber-700 tracking-wider uppercase">
-              Interactive Test Sandbox
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mt-2 mb-3">
-              Try the live admissions assistant
-            </h2>
-            <p className="text-stone-600 text-sm sm:text-base">
-              Test real queries directly against the live FastAPI backend and Gemini-powered routing.
-            </p>
-          </div>
-
-          {/* Interactive Playground Box */}
-          <div className="bg-[#FAF8F5] border border-stone-200 rounded-3xl p-6 sm:p-8 text-left shadow-warm-lg">
-            {/* Quick Suggestion Chips */}
-            <div className="mb-4">
-              <p className="text-xs font-medium text-stone-500 mb-2">Try a sample query:</p>
-              <div className="flex flex-wrap gap-2">
-                {samplePrompts.map((p, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => handleRunDemo(p.query)}
-                    className="text-xs font-medium bg-white hover:bg-stone-100 text-stone-700 border border-stone-200/90 px-3 py-1.5 rounded-full transition-colors cursor-pointer"
-                  >
-                    {p.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Input Composer */}
-            <div className="relative mb-6">
-              <input
-                type="text"
-                value={demoInput}
-                onChange={(e) => setDemoInput(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleRunDemo()}
-                placeholder="Ask about fees, timings, scholarships, batches, or refund policy..."
-                className="w-full bg-white border border-stone-300 rounded-2xl px-4 py-3.5 pr-24 text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-600/50"
-              />
-              <button
-                onClick={() => handleRunDemo()}
-                disabled={demoLoading || !demoInput.trim()}
-                className="absolute right-2 top-2 bottom-2 bg-stone-900 hover:bg-stone-800 disabled:opacity-50 text-white text-xs font-medium px-4 rounded-xl flex items-center space-x-1.5 transition-all cursor-pointer"
-              >
-                {demoLoading ? (
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                ) : (
-                  <>
-                    <span>Ask</span>
-                    <Send className="w-3 h-3" />
-                  </>
-                )}
-              </button>
-            </div>
-
-            {/* Live Response Panel */}
-            {demoResponse && (
-              <div className="bg-white rounded-2xl border border-stone-200/90 p-5 shadow-sm animate-fade-in">
-                <div className="flex items-center justify-between pb-3 mb-3 border-b border-stone-100">
-                  <div className="flex items-center space-x-2">
-                    {demoResponse.status === 'answered' ? (
-                      <span className="inline-flex items-center space-x-1 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                        <span>Approved Answer · {demoResponse.faq_id}</span>
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center space-x-1 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
-                        <AlertCircle className="w-3 h-3 text-amber-600" />
-                        <span>Escalated to Staff ({demoResponse.reason})</span>
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex items-center space-x-3 text-xs text-stone-500">
-                    <span className="flex items-center space-x-1">
-                      <Clock className="w-3 h-3" />
-                      <span>{demoResponse.latency_ms} ms</span>
-                    </span>
-                    <span className="text-[11px] font-mono text-stone-400">
-                      {demoResponse.request_id}
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-sm text-stone-800 leading-relaxed font-normal">
-                  {demoResponse.status === 'answered'
-                    ? demoResponse.answer
-                    : demoResponse.message || "I couldn't verify that from our approved information. The admissions team can assist you."}
-                </p>
-              </div>
-            )}
-
-            {/* Error Message */}
-            {demoError && (
-              <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center justify-between">
-                <span>{demoError}</span>
+              <div className="flex items-center space-x-1 bg-stone-200/60 p-0.5 rounded-lg text-xs font-medium">
                 <button
-                  onClick={() => handleRunDemo()}
-                  className="font-semibold underline ml-2 hover:text-rose-900 cursor-pointer"
+                  onClick={() => setSelectedDemoTab('grounded')}
+                  className={`px-3 py-1 rounded-md transition-all ${
+                    selectedDemoTab === 'grounded' ? 'bg-white shadow-xs text-stone-900 font-semibold' : 'text-stone-600 hover:text-stone-900'
+                  }`}
                 >
-                  Retry
+                  Grounded Answer
+                </button>
+                <button
+                  onClick={() => setSelectedDemoTab('escalated')}
+                  className={`px-3 py-1 rounded-md transition-all ${
+                    selectedDemoTab === 'escalated' ? 'bg-white shadow-xs text-stone-900 font-semibold' : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                >
+                  Counselor Escalation
                 </button>
               </div>
+            </div>
+
+            {/* Tab 1: Grounded Answer Demonstration */}
+            {selectedDemoTab === 'grounded' && (
+              <div className="space-y-4 py-2">
+                <div className="flex justify-end">
+                  <div className="bg-[#171C24] text-white px-4 py-2.5 rounded-2xl rounded-br-xs text-xs sm:text-sm max-w-md shadow-xs">
+                    What is the Foundation Program tuition fee?
+                  </div>
+                </div>
+                <div className="flex justify-start">
+                  <div className="bg-white border border-stone-200/90 p-4 rounded-2xl rounded-bl-xs text-xs sm:text-sm max-w-lg shadow-xs space-y-2.5">
+                    <p className="text-stone-800 leading-relaxed">
+                      The Foundation Program tuition fee is ₹24,000 for the full 10-month program. Study material and scheduled mock tests are included.
+                    </p>
+                    <div className="flex items-center justify-between pt-2 border-t border-stone-100 text-xs">
+                      <div className="flex items-center space-x-1.5 text-emerald-800 font-medium">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Approved Policy Grounded:</span>
+                        <span className="font-mono bg-emerald-50 text-emerald-900 px-1.5 py-0.5 rounded text-[11px] font-semibold border border-emerald-200/60">
+                          FAQ-002
+                        </span>
+                      </div>
+                      <span className="font-mono text-stone-400 text-[11px]">1.2ms · Fast-Path</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
 
-            {/* Link to Full Experience */}
-            <div className="mt-5 text-center">
+            {/* Tab 2: Controlled Escalation Demonstration */}
+            {selectedDemoTab === 'escalated' && (
+              <div className="space-y-4 py-2">
+                <div className="flex justify-end">
+                  <div className="bg-[#171C24] text-white px-4 py-2.5 rounded-2xl rounded-br-xs text-xs sm:text-sm max-w-md shadow-xs">
+                    Can you give me a 50% discount if I pay full JEE fee in cash today?
+                  </div>
+                </div>
+                <div className="flex justify-start">
+                  <div className="bg-amber-50/70 border border-amber-200/90 p-4 rounded-2xl rounded-bl-xs text-xs sm:text-sm max-w-lg shadow-xs space-y-2.5">
+                    <p className="text-stone-900 leading-relaxed">
+                      Northstar provides scholarships up to 20% subject to assessment. Unauthorized fee waivers cannot be granted by the automated assistant.
+                    </p>
+                    <div className="flex items-center justify-between pt-2 border-t border-amber-200/60 text-xs">
+                      <div className="flex items-center space-x-1.5 text-amber-900 font-medium">
+                        <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
+                        <span>Counselor Handoff:</span>
+                        <span className="font-mono bg-amber-100/80 text-amber-950 px-1.5 py-0.5 rounded text-[11px] font-semibold border border-amber-300">
+                          UNAUTHORIZED_DISCOUNT
+                        </span>
+                      </div>
+                      <span className="font-mono text-stone-400 text-[11px]">0.3ms · Guardrail Tripped</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Bottom Action Bar */}
+            <div className="mt-4 pt-3 border-t border-stone-200/70 flex items-center justify-between text-xs text-stone-500">
+              <span>Grounded in immutable Northstar Academy knowledge base</span>
               <button
                 onClick={() => onNavigateDemo ? onNavigateDemo() : (window.location.href = '/demo')}
-                className="inline-flex items-center space-x-1 text-xs font-semibold text-stone-700 hover:text-stone-900 cursor-pointer"
+                className="font-medium text-[#C1A37A] hover:text-[#B39366] inline-flex items-center space-x-1 cursor-pointer"
               >
-                <span>Launch full conversational studio with voice input</span>
+                <span>Launch Interactive Studio</span>
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -524,86 +445,330 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* ─────────────────────────────────────────────────────────────────────────────
-          SECTION E — PRODUCT CAPABILITIES
+          SECTION C — THE PROBLEM AND SOLUTION CONTRAST
       ───────────────────────────────────────────────────────────────────────────── */}
-      <section id="capabilities" className="py-20 border-t border-stone-200/70 bg-[#FDFBF7]">
+      <section className="py-20 border-t border-stone-200/70 bg-[#F8F7F4]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-xs font-bold text-[#C1A37A] tracking-wider uppercase font-mono">
+              The Operational Problem
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#171C24] mt-2 mb-4 font-sans">
+              Why conventional generative chatbots fail institutes
+            </h2>
+            <p className="text-stone-600 text-base sm:text-lg leading-relaxed">
+              When an unrestricted LLM talks with prospective parents, it attempts to answer everything.
+              In high-stakes admissions, hallucinated discounts or examination promises create severe legal liabilities.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* The Risk */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-white border border-stone-200/90 shadow-2xs text-left">
+              <div className="flex items-center space-x-2 text-rose-700 font-semibold text-xs mb-3">
+                <AlertCircle className="w-4 h-4" />
+                <span>The Conventional Chatbot Risk</span>
+              </div>
+              <h3 className="text-lg font-bold text-stone-900 mb-2">
+                Invented Fees & Unauthorized Promises
+              </h3>
+              <p className="text-sm text-stone-600 leading-relaxed mb-4">
+                Generative chatbots aim to please. Under user bargaining, they hallucinate fee waivers,
+                guarantee top examination ranks, or misstate strict 7-day refund rules.
+              </p>
+              <div className="space-y-2 text-xs text-stone-500 pt-3 border-t border-stone-100">
+                <div className="flex items-center space-x-2 text-rose-700">
+                  <span>✕</span>
+                  <span>Unverifiable probabilistic text synthesis</span>
+                </div>
+                <div className="flex items-center space-x-2 text-rose-700">
+                  <span>✕</span>
+                  <span>Silent negotiation of non-existent discounts</span>
+                </div>
+                <div className="flex items-center space-x-2 text-rose-700">
+                  <span>✕</span>
+                  <span>No audit trail or counselor escalation trigger</span>
+                </div>
+              </div>
+            </div>
+
+            {/* The Solution */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#C1A37A]/50 shadow-warm text-left relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-[#C1A37A]/10 rounded-bl-full pointer-events-none" />
+              <div className="flex items-center space-x-2 text-[#C1A37A] font-semibold text-xs mb-3">
+                <ShieldCheck className="w-4 h-4" />
+                <span>The Voxra Guarded Alternative</span>
+              </div>
+              <h3 className="text-lg font-bold text-stone-900 mb-2">
+                Automate Verifiable. Escalate the Rest.
+              </h3>
+              <p className="text-sm text-stone-600 leading-relaxed mb-4">
+                Voxra uses AI strictly for index matching and intent disambiguation. Customer answers are loaded
+                verbatim from approved policy. Anything unverified safely handsoff to staff.
+              </p>
+              <div className="space-y-2 text-xs text-stone-600 pt-3 border-t border-stone-100">
+                <div className="flex items-center space-x-2 text-emerald-700">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>100% Verbatim canonical FAQ strings</span>
+                </div>
+                <div className="flex items-center space-x-2 text-emerald-700">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Deterministic guardrails for discounts & guarantees</span>
+                </div>
+                <div className="flex items-center space-x-2 text-emerald-700">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Audited staff handoff queue with machine reason codes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────────────────────
+          SECTION D — HOW IT WORKS: 3-STAGE PIPELINE
+      ───────────────────────────────────────────────────────────────────────────── */}
+      <section id="how-it-works" className="py-20 border-t border-stone-200/70 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold text-amber-700 tracking-wider uppercase">
-              Production Capabilities
+            <span className="text-xs font-bold text-[#C1A37A] tracking-wider uppercase font-mono">
+              Predictable Engineering
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mt-2 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#171C24] mt-2 mb-4 font-sans">
+              How trusted enquiry intelligence works
+            </h2>
+            <p className="text-stone-600 text-base">
+              Every inquiry passes through three deterministic verification gates before any response is rendered.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Step 1 */}
+            <div className="bg-[#F8F7F4] p-6 sm:p-8 rounded-3xl border border-stone-200/80 shadow-2xs text-left">
+              <div className="w-10 h-10 rounded-xl bg-white text-[#171C24] font-bold text-sm flex items-center justify-center mb-5 border border-stone-200 shadow-2xs font-mono">
+                01
+              </div>
+              <h3 className="text-base font-bold text-stone-900 mb-2">
+                Parent Submits Inquiry
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                Parents ask questions in natural English or Hinglish via text or Web Speech voice input.
+                Input is validated and sanitized against prompt injections.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="bg-[#F8F7F4] p-6 sm:p-8 rounded-3xl border border-stone-200/80 shadow-2xs text-left">
+              <div className="w-10 h-10 rounded-xl bg-white text-[#171C24] font-bold text-sm flex items-center justify-center mb-5 border border-stone-200 shadow-2xs font-mono">
+                02
+              </div>
+              <h3 className="text-base font-bold text-stone-900 mb-2">
+                Guarded Verification Pipeline
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                Matches query against the 15 canonical FAQs via TF-IDF indexing. High confidence (≥0.72) resolves in &lt;3ms;
+                ambiguous queries trigger Gemini structured disambiguation.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="bg-[#F8F7F4] p-6 sm:p-8 rounded-3xl border border-stone-200/80 shadow-2xs text-left">
+              <div className="w-10 h-10 rounded-xl bg-white text-[#171C24] font-bold text-sm flex items-center justify-center mb-5 border border-stone-200 shadow-2xs font-mono">
+                03
+              </div>
+              <h3 className="text-base font-bold text-stone-900 mb-2">
+                Verbatim Answer or Handoff
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                If grounded, canonical answer text is loaded verbatim with exact FAQ ID and telemetry.
+                If out-of-scope, inquiry safely handsoff with reason codes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────────────────────
+          SECTION E — LIVE INTERACTIVE SANDBOX
+      ───────────────────────────────────────────────────────────────────────────── */}
+      <section className="py-20 border-t border-stone-200/70 bg-[#F8F7F4]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <div className="max-w-2xl mx-auto mb-10">
+            <span className="text-xs font-bold text-[#C1A37A] tracking-wider uppercase font-mono">
+              Live Interactive Sandbox
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#171C24] mt-2 mb-3 font-sans">
+              Test real queries in real time
+            </h2>
+            <p className="text-stone-600 text-sm sm:text-base">
+              Submit your inquiry below or tap a pre-loaded question to test live FastAPI `/ask` verification.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200/90 shadow-warm text-left">
+            {/* Pre-loaded Prompt Chips */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {samplePrompts.map((p, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleRunDemo(p.query)}
+                  disabled={demoLoading}
+                  className="text-xs bg-[#F8F7F4] hover:bg-stone-100 text-stone-700 px-3 py-1.5 rounded-full border border-stone-200/90 transition-colors shadow-2xs text-left"
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Input Composer */}
+            <div className="flex items-center space-x-2 mb-4">
+              <input
+                type="text"
+                placeholder="Ask about tuition fees, JEE timings, scholarships, refund..."
+                value={demoInput}
+                onChange={(e) => setDemoInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleRunDemo()}
+                disabled={demoLoading}
+                className="flex-1 bg-[#F8F7F4] border border-stone-300 px-4 py-2.5 rounded-xl text-xs sm:text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-[#C1A37A]/30"
+              />
+              <button
+                onClick={() => handleRunDemo()}
+                disabled={demoLoading || !demoInput.trim()}
+                className="bg-[#171C24] hover:bg-stone-800 disabled:opacity-40 text-white px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm flex items-center space-x-1.5 transition-all shadow-xs cursor-pointer"
+              >
+                {demoLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                <span className="hidden sm:inline">Ask</span>
+              </button>
+            </div>
+
+            {/* Live Output Card */}
+            {demoResponse && (
+              <div className="mt-4 p-4 rounded-2xl bg-[#F8F7F4] border border-stone-200 animate-fade-in text-xs sm:text-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center space-x-2">
+                    {demoResponse.status === 'answered' ? (
+                      <span className="inline-flex items-center space-x-1 text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Approved Policy Grounded</span>
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center space-x-1 text-amber-900 font-semibold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                        <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
+                        <span>Counselor Handoff</span>
+                      </span>
+                    )}
+                    {demoResponse.faq_id && (
+                      <span className="font-mono text-xs font-bold text-stone-700 bg-white px-1.5 py-0.5 rounded border border-stone-200">
+                        {demoResponse.faq_id}
+                      </span>
+                    )}
+                    {demoResponse.reason && (
+                      <span className="font-mono text-xs font-semibold text-amber-900 bg-amber-100/70 px-1.5 py-0.5 rounded border border-amber-300">
+                        {demoResponse.reason}
+                      </span>
+                    )}
+                  </div>
+                  <span className="font-mono text-[11px] text-stone-400">
+                    {demoResponse.latency_ms}ms
+                  </span>
+                </div>
+                <p className="text-stone-800 leading-relaxed">
+                  {demoResponse.answer || demoResponse.message}
+                </p>
+              </div>
+            )}
+
+            {demoError && (
+              <div className="mt-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center space-x-2">
+                <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
+                <span>{demoError}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────────────────────
+          SECTION F — CAPABILITIES GRID
+      ───────────────────────────────────────────────────────────────────────────── */}
+      <section className="py-20 border-t border-stone-200/70 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-xs font-bold text-[#C1A37A] tracking-wider uppercase font-mono">
+              Core Capabilities
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#171C24] mt-2 mb-4 font-sans">
               Engineered for absolute accuracy
             </h2>
             <p className="text-stone-600 text-base">
-              Designed from ground up to reduce admissions operational risk while maintaining rapid response times.
+              Six production pillars that safeguard coaching institutes from AI liability.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Feature 1 */}
-            <div className="p-6 rounded-2xl bg-white border border-stone-200/80 shadow-warm text-left">
-              <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
-                <BookOpen className="w-4 h-4" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* 1. Approved Knowledge Base */}
+            <div className="p-6 rounded-2xl bg-[#F8F7F4] border border-stone-200/80 text-left">
+              <div className="w-8 h-8 rounded-lg bg-white text-[#C1A37A] flex items-center justify-center mb-4 border border-stone-200 shadow-2xs">
+                <Database className="w-4 h-4" />
               </div>
-              <h3 className="font-bold text-base text-stone-900 mb-1.5">Approved Knowledge Base</h3>
+              <h3 className="text-sm font-bold text-stone-900 mb-1.5">Approved Knowledge Base</h3>
               <p className="text-xs text-stone-600 leading-relaxed">
-                Exactly 15 canonical FAQs covering tuition fees, schedules, capacity, scholarships, and refund policies.
+                15 immutable canonical FAQs governing program offerings, fees, instalments, batch capacity, and refund policies.
               </p>
             </div>
 
-            {/* Feature 2 */}
-            <div className="p-6 rounded-2xl bg-white border border-stone-200/80 shadow-warm text-left">
-              <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
+            {/* 2. Gemini Candidate Disambiguation */}
+            <div className="p-6 rounded-2xl bg-[#F8F7F4] border border-stone-200/80 text-left">
+              <div className="w-8 h-8 rounded-lg bg-white text-[#C1A37A] flex items-center justify-center mb-4 border border-stone-200 shadow-2xs">
                 <Cpu className="w-4 h-4" />
               </div>
-              <h3 className="font-bold text-base text-stone-900 mb-1.5">Gemini Disambiguation</h3>
+              <h3 className="text-sm font-bold text-stone-900 mb-1.5">Gemini 3.1 Flash Lite</h3>
               <p className="text-xs text-stone-600 leading-relaxed">
-                Uses official Gemini 3.1 Flash Lite strictly to classify and match user inquiries to candidate FAQ IDs.
+                Constrained structured output for semantic disambiguation between close candidates with zero generative text generation.
               </p>
             </div>
 
-            {/* Feature 3 */}
-            <div className="p-6 rounded-2xl bg-white border border-stone-200/80 shadow-warm text-left">
-              <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
+            {/* 3. Counselor Escalation */}
+            <div className="p-6 rounded-2xl bg-[#F8F7F4] border border-stone-200/80 text-left">
+              <div className="w-8 h-8 rounded-lg bg-white text-[#C1A37A] flex items-center justify-center mb-4 border border-stone-200 shadow-2xs">
                 <UserCheck className="w-4 h-4" />
               </div>
-              <h3 className="font-bold text-base text-stone-900 mb-1.5">Controlled Escalation</h3>
+              <h3 className="text-sm font-bold text-stone-900 mb-1.5">Human Counselor Handoff</h3>
               <p className="text-xs text-stone-600 leading-relaxed">
-                Clean routing to admissions staff with explicit machine reason codes when queries fall outside approved facts.
+                Controlled abstention with calibrated reason codes, routing sensitive queries to human admissions staff.
               </p>
             </div>
 
-            {/* Feature 4 */}
-            <div className="p-6 rounded-2xl bg-white border border-stone-200/80 shadow-warm text-left">
-              <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
-                <Lock className="w-4 h-4" />
+            {/* 4. Empirical Evaluation */}
+            <div className="p-6 rounded-2xl bg-[#F8F7F4] border border-stone-200/80 text-left">
+              <div className="w-8 h-8 rounded-lg bg-white text-[#C1A37A] flex items-center justify-center mb-4 border border-stone-200 shadow-2xs">
+                <CheckCircle2 className="w-4 h-4" />
               </div>
-              <h3 className="font-bold text-base text-stone-900 mb-1.5">Deterministic Guardrails</h3>
+              <h3 className="text-sm font-bold text-stone-900 mb-1.5">100% Benchmark Accuracy</h3>
               <p className="text-xs text-stone-600 leading-relaxed">
-                Upfront regex patterns block unauthorized discounts, rank guarantees, prompt injection, and off-topic questions.
+                20-question fixed evaluation suite with 10 answerable and 10 escalation test cases passing 100% with 0% false answer rate.
               </p>
             </div>
 
-            {/* Feature 5 */}
-            <div className="p-6 rounded-2xl bg-white border border-stone-200/80 shadow-warm text-left">
-              <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
-                <Layers className="w-4 h-4" />
+            {/* 5. Multilingual Hinglish */}
+            <div className="p-6 rounded-2xl bg-[#F8F7F4] border border-stone-200/80 text-left">
+              <div className="w-8 h-8 rounded-lg bg-white text-[#C1A37A] flex items-center justify-center mb-4 border border-stone-200 shadow-2xs">
+                <Sparkles className="w-4 h-4" />
               </div>
-              <h3 className="font-bold text-base text-stone-900 mb-1.5">20-Question Benchmark</h3>
+              <h3 className="text-sm font-bold text-stone-900 mb-1.5">Hinglish Query Processing</h3>
               <p className="text-xs text-stone-600 leading-relaxed">
-                Fixed 20-question evaluation set achieving 100% answer accuracy, 100% escalation accuracy, and 0% false answers.
+                Lexical normalization for colloquial Indian English and Hindi terms ("fees kitni hai" → tuition cost).
               </p>
             </div>
 
-            {/* Feature 6 */}
-            <div className="p-6 rounded-2xl bg-white border border-stone-200/80 shadow-warm text-left">
-              <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
+            {/* 6. Voice Input */}
+            <div className="p-6 rounded-2xl bg-[#F8F7F4] border border-stone-200/80 text-left">
+              <div className="w-8 h-8 rounded-lg bg-white text-[#C1A37A] flex items-center justify-center mb-4 border border-stone-200 shadow-2xs">
                 <Mic className="w-4 h-4" />
               </div>
-              <h3 className="font-bold text-base text-stone-900 mb-1.5">Voice Speech Input</h3>
+              <h3 className="text-sm font-bold text-stone-900 mb-1.5">Web Speech Voice Input</h3>
               <p className="text-xs text-stone-600 leading-relaxed">
-                Integrated Web Speech API speech-to-text with transcript preview and review before query execution.
+                In-browser microphone dictation with live transcript review before dispatching to guarded verification.
               </p>
             </div>
           </div>
@@ -611,131 +776,172 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* ─────────────────────────────────────────────────────────────────────────────
-          SECTION F — TRUST & ENGINEERING
+          SECTION G — TRUST & EVALUATION BENCHMARK
       ───────────────────────────────────────────────────────────────────────────── */}
-      <section id="trust" className="py-20 border-t border-stone-200/70 bg-white">
+      <section id="trust" className="py-20 border-t border-stone-200/70 bg-[#F8F7F4]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold text-amber-700 tracking-wider uppercase">
-              Architecture & Transparency
+            <span className="text-xs font-bold text-[#C1A37A] tracking-wider uppercase font-mono">
+              Verifiable Quality Metrics
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mt-2 mb-4">
-              Zero generative modification guarantee
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#171C24] mt-2 mb-4 font-sans">
+              Accountability in numbers
             </h2>
             <p className="text-stone-600 text-base">
-              The AI selects which approved FAQ entry applies. The exact canonical text is served directly from source code.
+              Every metric below is backed directly by reproducible evaluation runs on our fixed 20-question suite.
             </p>
           </div>
 
-          {/* Architecture comparison box */}
-          <div className="max-w-4xl mx-auto bg-[#FAF8F5] border border-stone-200/80 rounded-3xl p-6 sm:p-10 shadow-warm text-left">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div>
-                <h3 className="text-xl font-bold text-stone-900 mb-3">
-                  Why Northstar uses approved knowledge grounding
-                </h3>
-                <p className="text-sm text-stone-600 leading-relaxed mb-4">
-                  In education admissions, answering incorrectly is much worse than not answering at all.
-                  If an AI grants a 50% discount or promises a rank, parents feel entitled to that promise.
-                </p>
-                <p className="text-sm text-stone-600 leading-relaxed mb-6">
-                  Voxra treats a properly escalated question as a <strong>successful safety outcome</strong>.
-                  All operations are logged with machine-readable request IDs and full audit metadata.
-                </p>
-                <button
-                  onClick={() => onNavigateTab ? onNavigateTab('docs') : (window.location.href = '/docs')}
-                  className="inline-flex items-center space-x-2 text-xs font-semibold text-stone-900 hover:text-amber-800 underline underline-offset-4 cursor-pointer"
-                >
-                  <FileText className="w-3.5 h-3.5" />
-                  <span>Read full technical architecture notebook</span>
-                </button>
-              </div>
-
-              {/* Verified Metrics Snapshot */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-stone-100">
-                  <span className="text-xs font-semibold text-stone-700">Benchmark Metric</span>
-                  <span className="text-xs font-bold text-stone-900">Verified Result</span>
-                </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-stone-600">Answer Accuracy (10/10)</span>
-                  <span className="font-semibold text-emerald-700">100.0%</span>
-                </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-stone-600">Escalation Accuracy (10/10)</span>
-                  <span className="font-semibold text-emerald-700">100.0%</span>
-                </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-stone-600">False Answer Rate</span>
-                  <span className="font-semibold text-emerald-700">0.0%</span>
-                </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-stone-600">Deterministic Fast-Path Latency</span>
-                  <span className="font-semibold text-stone-900">&lt; 3.0 ms</span>
-                </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-stone-600">Cost per 1k Requests (Hybrid)</span>
-                  <span className="font-semibold text-amber-700">$0.0126</span>
-                </div>
-              </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
+            <div className="bg-white p-6 rounded-2xl border border-stone-200/90 text-center shadow-2xs">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#171C24] font-mono">100%</span>
+              <p className="text-xs text-stone-500 font-medium mt-1">Overall Accuracy (20/20)</p>
+            </div>
+            <div className="bg-white p-6 rounded-2xl border border-stone-200/90 text-center shadow-2xs">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#171C24] font-mono">0.0%</span>
+              <p className="text-xs text-stone-500 font-medium mt-1">False Answer Rate</p>
+            </div>
+            <div className="bg-white p-6 rounded-2xl border border-stone-200/90 text-center shadow-2xs">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#171C24] font-mono">&lt;3ms</span>
+              <p className="text-xs text-stone-500 font-medium mt-1">Fast-Path Latency</p>
+            </div>
+            <div className="bg-white p-6 rounded-2xl border border-stone-200/90 text-center shadow-2xs">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#171C24] font-mono">31</span>
+              <p className="text-xs text-stone-500 font-medium mt-1">Pytest Suites Passed</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────────────────────
-          SECTION G — FINAL CTA
+          SECTION H — FINAL HIGH-IMPACT CTA & FOOTER
       ───────────────────────────────────────────────────────────────────────────── */}
-      <section className="py-20 border-t border-stone-200/70 bg-gradient-to-b from-[#FDFBF7] to-[#FAF5EB]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-stone-900 mb-4">
-            See how trusted answers work.
+      <section className="py-24 border-t border-stone-200/70 bg-[#171C24] text-white text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <span className="text-xs font-bold text-[#C1A37A] tracking-wider uppercase font-mono">
+            Ready to experience
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mt-3 mb-5 font-sans">
+            Every answer, accounted for.
           </h2>
-          <p className="text-stone-600 text-base sm:text-lg max-w-xl mx-auto mb-8">
-            Experience the guarded enquiry intelligence studio built for Northstar Learning Academy.
+          <p className="text-stone-400 text-base max-w-xl mx-auto mb-8 leading-relaxed">
+            Protect your coaching institute from AI hallucinations and provide verified answers to parents instantly.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button
-              onClick={() => onNavigateDemo ? onNavigateDemo() : (window.location.href = '/demo')}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-stone-900 hover:bg-stone-800 text-white font-medium text-sm sm:text-base px-8 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
-            >
-              <span>Open live demo</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <a
-              href="https://github.com/Shashwatology/Voxra"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white hover:bg-stone-50 text-stone-800 border border-stone-300 font-medium text-sm sm:text-base px-6 py-3.5 rounded-full shadow-sm transition-all"
-            >
-              <span>View GitHub repository</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          </div>
+          <button
+            onClick={() => onNavigateDemo ? onNavigateDemo() : (window.location.href = '/demo')}
+            className="inline-flex items-center space-x-2 bg-[#C1A37A] hover:bg-[#B39366] text-[#171C24] font-semibold text-sm sm:text-base px-8 py-4 rounded-full shadow-lg transition-all cursor-pointer"
+          >
+            <span>Launch Northstar Assistant</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
       </section>
 
-      {/* ─────────────────────────────────────────────────────────────────────────────
-          SECTION H — FOOTER
-      ───────────────────────────────────────────────────────────────────────────── */}
-      <footer className="border-t border-stone-200 py-10 bg-white text-xs text-stone-500">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center space-x-2">
-            <div className="w-5 h-5 rounded bg-stone-900 text-amber-400 flex items-center justify-center font-bold text-[10px]">
-              V
+      {/* Minimalist Footer */}
+      <footer className="py-12 bg-[#171C24] border-t border-stone-800 text-stone-400 text-xs">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pb-10 border-b border-stone-800/80">
+            <div>
+              <div className="flex items-center space-x-2 font-mono text-sm font-semibold text-white mb-3">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#C1A37A]" />
+                <span>voxra.</span>
+              </div>
+              <p className="text-stone-400 text-xs leading-relaxed">
+                Guarded admissions intelligence platform simulating Northstar Learning Academy.
+              </p>
             </div>
-            <span className="font-semibold text-stone-800">Voxra · Enquiry Studio</span>
-            <span className="text-stone-300">|</span>
-            <span>Every answer, accounted for.</span>
+            <div>
+              <h4 className="text-white font-medium mb-3 text-xs uppercase tracking-wider font-mono">Product</h4>
+              <ul className="space-y-2">
+                <li>
+                  <button
+                    onClick={() => onNavigateDemo ? onNavigateDemo() : (window.location.href = '/demo')}
+                    className="hover:text-white transition-colors cursor-pointer"
+                  >
+                    Launch Assistant
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => onNavigateTab ? onNavigateTab('overview') : (window.location.href = '/overview')}
+                    className="hover:text-white transition-colors cursor-pointer"
+                  >
+                    Live Workspace
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => onNavigateTab ? onNavigateTab('knowledge') : (window.location.href = '/knowledge')}
+                    className="hover:text-white transition-colors cursor-pointer"
+                  >
+                    15 Approved FAQs
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-medium mb-3 text-xs uppercase tracking-wider font-mono">Governance</h4>
+              <ul className="space-y-2">
+                <li>
+                  <button
+                    onClick={() => onNavigateTab ? onNavigateTab('evaluations') : (window.location.href = '/evaluations')}
+                    className="hover:text-white transition-colors cursor-pointer"
+                  >
+                    Benchmark Evaluations
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => onNavigateTab ? onNavigateTab('handoffs') : (window.location.href = '/handoffs')}
+                    className="hover:text-white transition-colors cursor-pointer"
+                  >
+                    Review Queue
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => onNavigateTab ? onNavigateTab('security') : (window.location.href = '/security')}
+                    className="hover:text-white transition-colors cursor-pointer"
+                  >
+                    Security & Guardrails
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-medium mb-3 text-xs uppercase tracking-wider font-mono">Reference</h4>
+              <ul className="space-y-2">
+                <li>
+                  <button
+                    onClick={() => onNavigateTab ? onNavigateTab('docs') : (window.location.href = '/docs')}
+                    className="hover:text-white transition-colors cursor-pointer"
+                  >
+                    Documentation
+                  </button>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/Shashwatology/Voxra"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    GitHub Repository
+                  </a>
+                </li>
+                <li>
+                  <span className="text-emerald-400 font-mono text-[11px] block mt-1">● 100% Benchmark Verified</span>
+                </li>
+              </ul>
+            </div>
           </div>
-
-          <div className="text-center md:text-right">
-            <p className="text-[11px] text-stone-400">
-              Technical Assessment for AI Development Intern · StarvoxLabs Evaluation Simulation
-            </p>
-            <p className="text-[10px] text-stone-400 mt-0.5">
-              Fictional Campus: Northstar Learning Academy · Andheri West, Mumbai
-            </p>
+          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-500">
+            <div>
+              <span>© {new Date().getFullYear()} Voxra Admissions AI · Fictional Coaching Simulation</span>
+            </div>
+            <div>
+              Technical assessment for AI Development Intern opportunity at StarvoxLabs.
+            </div>
           </div>
         </div>
       </footer>
