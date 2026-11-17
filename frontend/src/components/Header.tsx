@@ -35,15 +35,17 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setActiveTab('landing')}
           >
             <div className="w-8 h-8 rounded-lg bg-stone-900 text-amber-400 flex items-center justify-center font-bold text-sm tracking-tighter shadow-sm group-hover:scale-105 transition-transform">
-              V
+              <svg className="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2v20M17 5v14M7 8v8M22 10v4M2 11v2" />
+              </svg>
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-semibold text-stone-900 tracking-tight text-base">
-                  Enquiry Studio
+                <span className="font-semibold text-stone-900 tracking-tight text-base font-sans">
+                  Voxra
                 </span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-medium bg-stone-100 text-stone-600 border border-stone-200">
-                  Northstar
+                <span className="text-[10px] px-1.5 py-0.5 rounded font-mono font-medium bg-amber-50 text-amber-900 border border-amber-200/80">
+                  Northstar Admissions
                 </span>
               </div>
               <p className="text-[10px] text-stone-400 font-normal">

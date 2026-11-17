@@ -49,9 +49,15 @@ UNSUPPORTED_LOCATION_PATTERNS = [
     re.compile(r"\b(delhi|bangalore|bengaluru|pune|hyderabad|chennai|kolkata|ahmedabad|kota|jaipur|gurgaon|noida)\b", re.IGNORECASE),
 ]
 
+SYLLABUS_PATTERNS = [
+    re.compile(r"\b(syll?a?u?b[ua]s|curriculum|study\s+plan|what\s+needs\s+to\s+be\s+studied|subjects\s+covered|chapters|study\s+for\s+jee|what\s+to\s+study)\b", re.IGNORECASE),
+]
+
 REFUND_BOUNDARY_PATTERNS = [
     re.compile(r"(refund\s+after\s+(attending|starting|beginning)\s+classes)", re.IGNORECASE),
     re.compile(r"(completed\s+\d+\s+weeks?.*refund|classes\s+have\s+started.*refund)", re.IGNORECASE),
+    re.compile(r"(registration\s+fee.*(instal+ment|split|part|after\s+classes))", re.IGNORECASE),
+    re.compile(r"(instal+ments?.*(registration\s+fee|after\s+classes\s+start))", re.IGNORECASE),
 ]
 
 class GuardrailService:
@@ -123,6 +129,16 @@ class GuardrailService:
                     False,
                     EscalationReason.UNSUPPORTED_QUESTION,
                     "Northstar Learning Academy operates exclusively at our single campus in Andheri West, Mumbai. We do not have branches in other cities."
+                )
+
+        # 7. Syllabus and Curriculum Detailed Inquiries
+        for pattern in SYLLABUS_PATTERNS:
+            if pattern.search(cleaned):
+                logger.info("Guardrail tripped: Detailed curriculum inquiry.")
+                return (
+                    False,
+                    EscalationReason.UNSUPPORTED_QUESTION,
+                    "Northstar Learning Academy offers a 12-month JEE Preparation Program for Classes 11-12 and a 10-month Foundation Program for Classes 9-10 with study material and mock tests included. For the detailed subject syllabus and chapter breakdown, please contact our academic team at admissions@northstar.example."
                 )
 
         # 6. Refund Policy Violation Demands

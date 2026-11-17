@@ -1,0 +1,10 @@
+{
+  "name": "voxra-guarded-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Voxra — Trusted AI Enquiry Intelligence for Northstar Learning Academy",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "dev": "npm --prefix frontend run dev"
+  }
+}

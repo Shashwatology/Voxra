@@ -175,14 +175,15 @@ class RetrievalService:
             )
 
         # 2. Score Margin Ambiguity Check
-        # If top 1 and top 2 are very close, and top 1 is not overwhelmingly confident
+        # Ambiguity only applies when top candidate is an actual viable match (>= SIMILARITY_THRESHOLD)
         is_ambiguous = False
         ambiguity_reason = None
-        if top2 and (top1.score - top2.score < settings.AMBIGUITY_DELTA) and (top1.score < settings.HIGH_CONFIDENCE_THRESHOLD):
-            # Check if candidates represent different distinct programs or categories
-            if top1.faq_id != top2.faq_id:
-                is_ambiguous = True
-                ambiguity_reason = f"Close similarity between {top1.faq_id} ({top1.score:.2f}) and {top2.faq_id} ({top2.score:.2f})."
+        if top1.score >= settings.SIMILARITY_THRESHOLD:
+            if top2 and (top1.score - top2.score < settings.AMBIGUITY_DELTA) and (top1.score < settings.HIGH_CONFIDENCE_THRESHOLD):
+                # Check if candidates represent different distinct programs or categories
+                if top1.faq_id != top2.faq_id:
+                    is_ambiguous = True
+                    ambiguity_reason = f"Close similarity between {top1.faq_id} ({top1.score:.2f}) and {top2.faq_id} ({top2.score:.2f})."
 
         # 3. Low Confidence Check
         is_low_confidence = top1.score < settings.SIMILARITY_THRESHOLD

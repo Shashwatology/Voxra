@@ -69,17 +69,34 @@ class AnswerService:
                 candidate_ids=candidate_ids,
                 confidence=retrieval.top_candidate.score if retrieval.top_candidate else 0.0
             )
+
+            q_lower = query.lower()
+            if any(w in q_lower for w in ["fee", "fees", "cost", "price", "charge", "amount", "pay"]):
+                ambiguity_prompt = (
+                    "Your question could apply to multiple programs or fee structures. "
+                    "Could you please specify whether you are asking about the Foundation Program (Classes 9-10), "
+                    "JEE Preparation (Classes 11-12), or registration charges?"
+                )
+            elif any(w in q_lower for w in ["timing", "timings", "time", "schedule", "days", "hours", "when"]):
+                ambiguity_prompt = (
+                    "Your question could apply to multiple schedules. "
+                    "Could you please specify whether you are asking about Foundation Program weekday timings, "
+                    "JEE Preparation timings, or weekend batches?"
+                )
+            else:
+                ambiguity_prompt = (
+                    "Your question could match multiple topics in our guidelines. "
+                    "Could you please clarify whether you are asking about the Foundation Program (Classes 9-10) "
+                    "or the JEE Preparation Program (Classes 11-12)?"
+                )
+
             return AskResponse(
                 status="escalated",
                 answer=None,
                 faq_id=None,
                 source=None,
                 reason=EscalationReason.AMBIGUOUS_QUERY.value,
-                message=(
-                    "Your question could apply to multiple programs or fee structures. "
-                    "Could you please specify whether you are asking about the Foundation Program (Classes 9-10), "
-                    "JEE Preparation (Classes 11-12), or registration charges?"
-                ),
+                message=ambiguity_prompt,
                 request_id=request_id,
                 latency_ms=round(elapsed_ms, 2),
                 confidence=round(retrieval.top_candidate.score, 3) if retrieval.top_candidate else None

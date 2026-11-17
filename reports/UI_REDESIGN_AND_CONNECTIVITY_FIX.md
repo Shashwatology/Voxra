@@ -116,3 +116,4 @@ If hosting the backend on Render, Railway, or Google Cloud Run:
 2. In the Vercel Frontend environment variables, set:
    - `VITE_API_URL`: `https://your-backend-domain.com`
 3. All frontend requests will automatically direct to that endpoint with zero code changes.
+

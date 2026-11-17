@@ -30,6 +30,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   onNavigateTab
 }) => {
   // Live mini-demo state on landing page
+  const [heroQuery, setHeroQuery] = useState('');
   const [demoInput, setDemoInput] = useState('');
   const [demoLoading, setDemoLoading] = useState(false);
   const [demoResponse, setDemoResponse] = useState<AskResponse | null>(null);
@@ -84,21 +85,81 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             institute policies and a clear route to human assistance.
           </p>
 
-          {/* Two CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-14 sm:mb-20">
-            <button
-              onClick={() => onNavigateDemo ? onNavigateDemo() : (window.location.href = '/demo')}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-stone-900 hover:bg-stone-800 text-white font-medium text-sm sm:text-base px-7 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all cursor-pointer"
+          {/* Hero Quick Inquiry Bar — Directly Inspired by Reference Composition */}
+          <div className="max-w-xl mx-auto mb-10 sm:mb-14">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (heroQuery.trim()) {
+                  if (onNavigateDemo) {
+                    onNavigateDemo();
+                  } else {
+                    window.location.href = '/demo';
+                  }
+                }
+              }}
+              className="relative flex items-center bg-white border border-stone-300 rounded-full p-1.5 shadow-md focus-within:ring-2 focus-within:ring-amber-500/30 focus-within:border-stone-400 transition-all"
             >
-              <span>Try the assistant</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <a
-              href="#how-it-works"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white hover:bg-stone-50 text-stone-800 border border-stone-300/80 font-medium text-sm sm:text-base px-6 py-3.5 rounded-full shadow-sm hover:border-stone-400 transition-all"
-            >
-              <span>See how it works</span>
-            </a>
+              <input
+                type="text"
+                placeholder="Ask about tuition fees, JEE timings, scholarships, refund..."
+                value={heroQuery}
+                onChange={(e) => setHeroQuery(e.target.value)}
+                className="flex-1 bg-transparent px-5 py-2.5 text-xs sm:text-sm text-stone-900 placeholder-stone-400 focus:outline-none"
+              />
+              <button
+                type="submit"
+                onClick={() => {
+                  if (onNavigateDemo) onNavigateDemo();
+                  else window.location.href = '/demo';
+                }}
+                className="inline-flex items-center space-x-1.5 bg-[#F6A54C] hover:bg-[#E8953C] text-stone-950 font-medium text-xs sm:text-sm px-5 py-2.5 rounded-full transition-all shadow-sm shrink-0 cursor-pointer"
+              >
+                <span>Try live demo</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </form>
+
+            {/* Quick Prompt Suggestions */}
+            <div className="flex flex-wrap items-center justify-center gap-1.5 mt-3 text-xs text-stone-500">
+              <span className="text-[11px] font-medium text-stone-400">Popular:</span>
+              <button
+                onClick={() => {
+                  setHeroQuery("What is the JEE Preparation Program tuition fee?");
+                  handleRunDemo("What is the JEE Preparation Program tuition fee?");
+                }}
+                className="text-[11px] bg-white/90 hover:bg-white border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-amber-400"
+              >
+                JEE Fee: ₹60,000
+              </button>
+              <button
+                onClick={() => {
+                  setHeroQuery("What is the Foundation Program tuition fee?");
+                  handleRunDemo("What is the Foundation Program tuition fee?");
+                }}
+                className="text-[11px] bg-white/90 hover:bg-white border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-amber-400"
+              >
+                Foundation Fee: ₹24,000
+              </button>
+              <button
+                onClick={() => {
+                  setHeroQuery("When are JEE classes scheduled during the week?");
+                  handleRunDemo("When are JEE classes scheduled during the week?");
+                }}
+                className="text-[11px] bg-white/90 hover:bg-white border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-amber-400"
+              >
+                JEE Timings
+              </button>
+              <button
+                onClick={() => {
+                  setHeroQuery("Does the institute offer scholarships?");
+                  handleRunDemo("Does the institute offer scholarships?");
+                }}
+                className="text-[11px] bg-white/90 hover:bg-white border border-stone-200/90 text-stone-700 px-2.5 py-0.5 rounded-full transition-colors shadow-2xs hover:border-amber-400"
+              >
+                20% Scholarship
+              </button>
+            </div>
           </div>
 
           {/* ─────────────────────────────────────────────────────────────────────────
@@ -106,26 +167,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           ───────────────────────────────────────────────────────────────────────── */}
           <div className="relative max-w-4xl mx-auto mt-4">
             {/* Ambient Golden Glow Behind Image */}
-            <div className="absolute inset-0 bg-gradient-to-t from-amber-200/40 via-amber-100/20 to-transparent blur-3xl rounded-full transform -translate-y-8" />
+            <div className="absolute inset-0 bg-gradient-to-t from-amber-200/50 via-amber-100/20 to-transparent blur-3xl rounded-full transform -translate-y-8" />
 
-            {/* Central Photographic Subject */}
-            <div className="relative z-10 mx-auto w-72 sm:w-96 md:w-[420px] aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-stone-100">
+            {/* Central Photographic Subject with Soft Gradient Blend */}
+            <div className="relative z-10 mx-auto w-72 sm:w-96 md:w-[420px] aspect-[4/5] rounded-3xl overflow-hidden shadow-warm-lg bg-stone-100">
               <img
                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
                 alt="Parent reviewing admissions enquiry on smartphone"
                 className="w-full h-full object-cover object-center"
                 loading="eager"
               />
-              {/* Soft Bottom Gradient Fade into Canvas */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#FDFBF7] via-transparent to-transparent opacity-80" />
+              {/* Soft Bottom Gradient Fade into Ivory Canvas */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#FDFBF7] via-transparent to-transparent opacity-90" />
             </div>
 
-            {/* FLOATING CARD 1: Grounded Approved Answer (Top Left) */}
-            <div className="hidden sm:block absolute -top-4 -left-6 md:-left-12 z-20 max-w-xs text-left bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-warm-lg border border-stone-200/90 transform -rotate-1 hover:rotate-0 transition-transform">
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="w-6 h-6 rounded-full bg-stone-100 text-stone-700 flex items-center justify-center text-xs font-semibold">
+            {/* FLOATING CARD 1: Grounded Approved Answer (Left) */}
+            <div className="hidden sm:block absolute top-12 -left-6 md:-left-14 z-20 max-w-xs text-left bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-warm-lg border border-stone-200/90 transform -rotate-1 hover:rotate-0 transition-transform">
+              <div className="flex items-center space-x-2.5 mb-2">
+                <div className="w-6 h-6 rounded-full bg-amber-100 text-amber-900 flex items-center justify-center text-[10px] font-bold">
                   P
-                </span>
+                </div>
                 <p className="text-xs font-semibold text-stone-800">
                   What is the fee for the Foundation Program?
                 </p>
@@ -143,19 +204,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </div>
             </div>
 
-            {/* FLOATING CARD 2: Controlled Policy Escalation (Top Right) */}
-            <div className="hidden sm:block absolute -top-8 -right-6 md:-right-12 z-20 max-w-xs text-left bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-warm-lg border border-stone-200/90 transform rotate-1 hover:rotate-0 transition-transform">
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="w-6 h-6 rounded-full bg-stone-100 text-stone-700 flex items-center justify-center text-xs font-semibold">
+            {/* FLOATING CARD 2: Controlled Policy Escalation (Right Top) */}
+            <div className="hidden sm:block absolute top-4 -right-6 md:-right-14 z-20 max-w-xs text-left bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-warm-lg border border-stone-200/90 transform rotate-1 hover:rotate-0 transition-transform">
+              <div className="flex items-center space-x-2.5 mb-2">
+                <div className="w-6 h-6 rounded-full bg-stone-100 text-stone-700 flex items-center justify-center text-[10px] font-bold">
                   P
-                </span>
+                </div>
                 <p className="text-xs font-semibold text-stone-800">
                   Can you guarantee a top JEE rank?
                 </p>
               </div>
               <div className="pl-8 border-l-2 border-amber-500/60 ml-3 py-0.5 space-y-1">
                 <p className="text-xs text-stone-600 leading-snug">
-                  "Result guarantees are not covered by our approved information. Our admissions team can assist you."
+                  "Result guarantees are not covered by our approved policy. Our admissions counselors will assist you."
                 </p>
                 <div className="flex items-center space-x-1.5 pt-1">
                   <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
@@ -166,24 +227,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </div>
             </div>
 
-            {/* FLOATING CARD 3: Schedule Verification (Bottom Right) */}
-            <div className="hidden md:block absolute bottom-8 -right-8 z-20 max-w-xs text-left bg-white/95 backdrop-blur-sm p-3.5 rounded-2xl shadow-warm-lg border border-stone-200/90 transform -rotate-1 hover:rotate-0 transition-transform">
+            {/* FLOATING CARD 3: Schedule Verification (Right Bottom) */}
+            <div className="hidden md:block absolute bottom-12 -right-10 z-20 max-w-xs text-left bg-white/95 backdrop-blur-sm p-3.5 rounded-2xl shadow-warm-lg border border-stone-200/90 transform -rotate-1 hover:rotate-0 transition-transform">
               <div className="flex items-center space-x-2 mb-1.5">
-                <span className="w-5 h-5 rounded-full bg-stone-100 text-stone-700 flex items-center justify-center text-[10px] font-semibold">
+                <div className="w-5 h-5 rounded-full bg-stone-100 text-stone-700 flex items-center justify-center text-[10px] font-bold">
                   P
-                </span>
+                </div>
                 <p className="text-xs font-semibold text-stone-800">
-                  Are weekend batches available?
+                  Can tuition be paid in instalments?
                 </p>
               </div>
               <div className="pl-7 border-l-2 border-emerald-500/60 ml-2.5 py-0.5 space-y-1">
                 <p className="text-xs text-stone-600 leading-snug">
-                  "Foundation weekend batch: Sat & Sun 9:00 AM–11:00 AM IST."
+                  "Yes, tuition may be paid in two equal instalments 30 days apart."
                 </p>
                 <div className="flex items-center space-x-1">
                   <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                   <span className="text-[10px] font-semibold text-emerald-800 uppercase tracking-wider">
-                    Verified · FAQ-008
+                    Verified · FAQ-005
                   </span>
                 </div>
               </div>
